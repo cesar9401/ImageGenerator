@@ -1,5 +1,6 @@
 package com.cesar31.imggenerator;
 
+import com.cesar31.imggenerator.structures.MatrixNode;
 import com.cesar31.imggenerator.structures.SparseMatrix;
 
 /**
@@ -11,17 +12,27 @@ public class ImageGenerator {
     public static void main(String[] args) {
         SparseMatrix matrix = new SparseMatrix();
 
-        matrix.viewColumns();
-        matrix.insertColumn(20);
-        matrix.insertColumn(15);
+//        matrix.viewRows();
+//        matrix.viewColumns();
+        matrix.insert(1, 1, "verde");
 
-        matrix.insertColumn(3);
-        matrix.viewColumns();
+        matrix.insert(5, 1, "rojo");
+        matrix.insert(4, 2, "negro");
+        matrix.insert(1, 2, "azul");
+        matrix.insert(6, 7, "azul");
 
-        matrix.insertColumn(1);
-        matrix.insertColumn(5);
-        matrix.insertColumn(2);
+//        matrix.viewRows();
+//        matrix.viewColumns();
+//        MatrixNode node = matrix.searchNode(1, 1);
+//
+//        if (node != null) {
+//            System.out.println(node.toString());
+//            System.out.println("Righ: " + node.getRight().toString());
+//            System.out.println("Left: " + node.getLetf().toString());
+//            System.out.println("Up: " + node.getUp().toString());
+//            System.out.println("Down: " + node.getDown().toString());
+//        }
+        System.out.println(matrix.createDotFile());
 
-        matrix.viewColumns();
     }
 }
