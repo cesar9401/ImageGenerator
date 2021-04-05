@@ -1,1 +1,7 @@
 /target/
+
+# dot files
+*.dot
+
+# png files
+*.png

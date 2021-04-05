@@ -1,10 +1,17 @@
 package com.cesar31.imggenerator.structures;
 
+import com.cesar31.imggenerator.control.WriteFile;
+import java.io.IOException;
+
 /**
  *
  * @author cesar31
  */
 public class SparseMatrix {
+
+    private final String MATRIX_D = "matrix.dot";
+    private final String MATRIX_P = "matrix.png";
+    private final String COMMAND = "dot -Tpng " + MATRIX_D + " -o " + MATRIX_P;
 
     private MatrixNode root;
     private int rows;
@@ -290,7 +297,20 @@ public class SparseMatrix {
         }
     }
 
-    public String createDotFile() {
+    public void generateDotFile() {
+        WriteFile write = new WriteFile();
+
+        String content = getDotString();
+        write.writeDotFile(MATRIX_D, content);
+        try {
+            write.execComand(COMMAND);
+        } catch (IOException ex) {
+            ex.printStackTrace(System.out);
+        }
+
+    }
+
+    public String getDotString() {
         String graph = "digraph graph_name {\n\n";
         graph += "\tnode [shape = box]\n\n";
 
@@ -338,8 +358,8 @@ public class SparseMatrix {
             if (aux.getLetf() != null && aux.getLetf() != root) {
                 graph += nodeToNode(aux, aux.getLetf());
             }
-            
-            if(aux.getDown() != null) {
+
+            if (aux.getDown() != null) {
                 graph += nodeToNode(aux, aux.getDown());
             }
             aux = aux.getRight();
