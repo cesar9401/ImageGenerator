@@ -8,6 +8,10 @@ import java.io.IOException;
  * @author cesar31
  */
 public class SparseMatrix {
+    
+    /* Propiedades de SparseMatrix - Capas para las Imagenes */
+    private int id;
+    private SparseMatrix next;
 
     private final String MATRIX_D = "matrix.dot";
     private final String MATRIX_P = "matrix.png";
@@ -23,6 +27,11 @@ public class SparseMatrix {
 
         this.rows = 0;
         this.columns = 0;
+    }
+    
+    public SparseMatrix(int id) {
+        this();
+        this.id = id;
     }
 
     /**
@@ -480,5 +489,21 @@ public class SparseMatrix {
 
     public int getColumns() {
         return columns;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public SparseMatrix getNext() {
+        return next;
+    }
+
+    public void setNext(SparseMatrix next) {
+        this.next = next;
     }
 }

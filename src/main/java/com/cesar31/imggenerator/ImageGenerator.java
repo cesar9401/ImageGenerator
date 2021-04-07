@@ -7,15 +7,58 @@ import com.cesar31.imggenerator.structures.*;
  * @author cesar31
  */
 public class ImageGenerator {
-    
+
     public static void main(String[] args) {
         //matrixTest();
-        AVLTest();
+        //AVLTest();
+        //objectListTest();
+        circularListTest();
     }
-    
+
+    public static void circularListTest() {
+        CircularList list = new CircularList();
+        list.insertar(1, "objeto");
+        list.insertar(2, "objeto");
+        list.insertar(3, "objeto");
+        list.insertar(4, "objeto");
+        list.insertar(5, "objeto");
+        list.insertar(6, "objeto");
+
+        list.delete(6);
+        list.delete(1);
+
+        list.delete(4);
+        list.delete(2);
+
+        list.delete(3);
+
+        list.insertar(3, "objeto");
+        list.insertar(4, "objeto");
+
+        list.generateDotFile();
+    }
+
+    public static void objectListTest() {
+        ObjectList list = new ObjectList();
+
+        list.insertar(1, "objeto");
+        list.insertar(2, "objeto");
+        list.insertar(3, "objeto");
+        list.insertar(4, "objeto");
+        list.insertar(5, "objeto");
+        list.insertar(6, "objeto");
+        list.insertar(7, "objeto");
+
+        list.getNode(2);
+
+        list.delete(3);
+
+        list.generateDotFile();
+    }
+
     public static void AVLTest() {
         AVLTree tree = new AVLTree();
-        
+
         tree.insert(18, "objecto");
         tree.insert(9, "objecto");
         tree.insert(25, "objecto");
@@ -30,7 +73,7 @@ public class ImageGenerator {
         tree.insert(8, "objecto");
         tree.insert(27, "objeto");
         tree.insert(1, "objeto");
-        
+
         tree.delete(21);
         tree.delete(24);
         tree.delete(18);
@@ -38,14 +81,14 @@ public class ImageGenerator {
         //System.out.println("Size: " + tree.getSize());
         tree.generateDotFile();
     }
-    
+
     public static void matrixTest() {
         SparseMatrix matrix = new SparseMatrix();
 
 //        matrix.viewRows();
 //        matrix.viewColumns();
         matrix.insert(1, 1, "verde");
-        
+
         matrix.insert(5, 1, "rojo");
         matrix.insert(4, 2, "negro");
         matrix.insert(1, 2, "azul");
