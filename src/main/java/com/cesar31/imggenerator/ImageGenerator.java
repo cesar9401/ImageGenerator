@@ -16,36 +16,31 @@ public class ImageGenerator {
     public static void AVLTest() {
         AVLTree tree = new AVLTree();
 
-        tree.insert(30, "objecto");
-        tree.insert(10, "objecto");
-        tree.insert(35, "objecto");
-        tree.insert(5, "objecto");
-        tree.insert(20, "objecto");
-        tree.insert(15, "objecto");
+        tree.insert(18, "objecto");
+        tree.insert(9, "objecto");
         tree.insert(25, "objecto");
-        tree.insert(40, "objecto");
-        tree.insert(45, "objecto");
-        tree.insert(50, "objecto");
-        tree.insert(55, "objecto");
-        tree.insert(60, "objecto");
+        tree.insert(7, "objecto");
+        tree.insert(12, "objecto");
+        tree.insert(23, "objecto");
+        tree.insert(29, "objecto");
 
-        tree.insert(300, "objecto");
-        tree.insert(400, "objecto");
-        tree.insert(600, "objecto");
-        tree.insert(800, "objecto");
+        tree.insert(2, "objecto");
+        tree.insert(11, "objecto");
+        tree.insert(10, "objecto");
 
-        tree.insert(210, "objecto");
-        tree.insert(220, "objecto");
-        tree.insert(230, "objecto");
-        tree.insert(240, "objecto");
-        tree.insert(250, "objecto");
-        tree.insert(260, "objecto");
-        tree.insert(299, "objecto");
-        tree.insert(350, "objecto");
-        tree.insert(360, "objecto");
+        tree.insert(21, "objecto");
+        tree.insert(24, "objecto");
+        //tree.insert(31, "objecto");
+        tree.insert(8, "objecto");
 
-        System.out.println("Size: " + tree.getSize());
+        tree.delete(29);
+        tree.delete(21);
+        tree.delete(23);
+        tree.delete(18);
+        tree.delete(9);
+        tree.delete(90);
 
+        //System.out.println("Size: " + tree.getSize());
         tree.generateDotFile();
     }
 

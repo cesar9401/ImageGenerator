@@ -28,7 +28,6 @@ public class AVLTree {
         } else {
             this.root = insert(node, root);
         }
-
     }
 
     /**
@@ -72,6 +71,117 @@ public class AVLTree {
         }
 
         return dad;
+    }
+
+    public void delete(int id) {
+        if (this.root != null) {
+            this.root = delete(id, root);
+        } else {
+            System.out.println("Arbol vacio");
+        }
+    }
+
+    private AVLNode delete(int id, AVLNode father) {
+        AVLNode dad = father;
+
+        if (id < father.getId()) {
+            if (father.getLeft() != null) {
+                if (father.getLeft().getId() == id) {
+                    father.setLeft(delete(father.getLeft()));
+                } else {
+                    /* Padre -> hijo izquierda */
+                    father.setLeft(delete(id, father.getLeft()));
+
+                }
+
+            } else {
+                System.out.println("Nodo no encontrado");
+            }
+        } else if (id > father.getId()) {
+            if (father.getRight() != null) {
+                if (father.getRight().getId() == id) {
+                    father.setRight(delete(father.getRight()));
+                } else {
+                    /* Padre -> hijo derecha */
+                    father.setRight(delete(id, father.getRight()));
+                }
+
+            } else {
+                System.out.println("Nodo no encontrado");
+            }
+        } else if (id == father.getId()) {
+            dad = delete(father);
+        } else {
+            System.out.println("Nodo no encontrado");
+        }
+
+        if (dad.getFactor() == 2) {
+            if (dad.getRight().getFactor() < 0) {
+                /* Rotacion doble der */
+                dad = doubleRightRotation(dad);
+            } else {
+                dad = rightRotation(dad);
+            }
+        }
+
+        if (dad.getFactor() == -2) {
+            if (dad.getLeft().getFactor() > 0) {
+                /* Rotacion doble izq */
+                dad = doubleLeftRotation(dad);
+            } else {
+                dad = leftRotation(dad);
+            }
+        }
+        //System.out.println("dad: " + dad.getFactor());
+        return dad;
+    }
+
+    private AVLNode delete(AVLNode node) {
+        /* Eliminar */
+
+        boolean right = node.getRight() != null;
+        boolean left = node.getLeft() != null;
+
+        if (!right && !left) {
+            /* Nodo hoja */
+            //System.out.println("Eliminar nodo hoja: " + node.getId());
+            node = null;
+
+        } else if (right && left) {
+            AVLNode dadLeft = lowerRight(node.getRight());
+            if (dadLeft.getLeft() == null) {
+                dadLeft.setLeft(node.getLeft());
+
+                node = dadLeft;
+            } else {
+                AVLNode lft = dadLeft.getLeft();
+                if (lft.getRight() != null) {
+                    dadLeft.setLeft(lft.getRight());
+                } else {
+                    dadLeft.setLeft(null);
+                }
+
+                lft.setLeft(node.getLeft());
+                lft.setRight(node.getRight());
+
+                node = lft;
+            }
+
+        } else if (right || left) {
+            /*Tiene un hijo hijos */
+            //System.out.println("Eliminar nodo un hijo: " + node.getId());
+            node = right ? node.getRight() : node.getLeft();
+        }
+        return node;
+    }
+
+    private AVLNode lowerRight(AVLNode node) {
+        if (node.getLeft() != null) {
+            if (node.getLeft().getLeft() != null) {
+                node = lowerRight(node.getLeft());
+            }
+        }
+        return node;
     }
 
     private AVLNode doubleRightRotation(AVLNode node) {
