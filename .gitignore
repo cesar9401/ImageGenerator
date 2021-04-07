@@ -5,3 +5,8 @@
 
 # png files
 *.png
+
+# archivos java y sh en carpeta analizador
+analizador/*.java
+analizador/*.java~
+analizador/*.sh

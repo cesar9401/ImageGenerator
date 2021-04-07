@@ -1,6 +1,6 @@
 package com.cesar31.imggenerator.structures;
 
-import com.cesar31.imggenerator.control.WriteFile;
+import com.cesar31.imggenerator.control.ControlFile;
 import java.io.IOException;
 
 /**
@@ -108,7 +108,7 @@ public class CircularList {
     }
 
     public void generateDotFile() {
-        WriteFile write = new WriteFile();
+        ControlFile write = new ControlFile();
         String content = getDotString();
 
         write.writeDotFile(LIST_D, content);

@@ -1,6 +1,10 @@
 package com.cesar31.imggenerator;
 
+import com.cesar31.imggenerator.control.ControlFile;
+import com.cesar31.imggenerator.parser.ImageLex;
+import com.cesar31.imggenerator.parser.ImageParser;
 import com.cesar31.imggenerator.structures.*;
+import java.io.StringReader;
 
 /**
  *
@@ -12,7 +16,23 @@ public class ImageGenerator {
         //matrixTest();
         //AVLTest();
         //objectListTest();
-        circularListTest();
+        //circularListTest();
+        parserTest();
+    }
+    
+    public static void parserTest() {
+        ControlFile control = new ControlFile();
+        String data = control.readData("/home/cesar31/Java/ImageGenerator/datos/capas.cap");
+        System.out.println(data);
+        
+        ImageLex lex = new ImageLex(new StringReader(data));
+        ImageParser parser = new ImageParser(lex);
+        try {
+            parser.parse();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+            
     }
 
     public static void circularListTest() {

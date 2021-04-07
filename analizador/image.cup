@@ -1,0 +1,110 @@
+package com.cesar31.imggenerator.parser;
+
+import java.util.ArrayList;
+import java.util.List;
+import java_cup.runtime.Symbol;
+
+class ImageParser;
+
+parser code {:
+
+	public ImageParser(ImageLex lex) {
+		super(lex);
+	}
+
+	public void syntax_error(Symbol cur_token) {
+        System.out.printf("syntax_error: Linea: %d, columna: %d, sym: %s, nombre: %s, value: \"%s\", parse_state: %d\n", cur_token.left, cur_token.right, cur_token.sym, symbl_name_from_id(cur_token.sym), cur_token.value, cur_token.parse_state);
+        List<Integer> tokens = expected_token_ids();
+        System.out.print("Se esperaba ->");
+        for(Integer i : tokens) {
+			System.out.printf("%s, ", symbl_name_from_id(i));
+        }
+        System.out.println("");
+	}
+
+:}
+
+terminal COLON, COMMA, SEMI_COLON, RBRACE, LBRACE;
+terminal String USER_NAME, COLOR;
+terminal Integer INTEGER;
+terminal ERROR;
+
+non terminal data;
+non terminal make_layers, layer, make_cells, cell;
+non terminal make_images, image;
+non terminal make_users, user;
+
+non terminal List<Integer> make_numbers, ids;
+
+data
+	::= make_layers
+	{: System.out.println("capas"); :}
+	| make_images
+	{: System.out.println("imagenes"); :}
+	| make_users
+	{: System.out.println("usuarios"); :}
+	;
+
+/* capas */
+make_layers
+	::= layer
+	| make_layers layer
+	;
+
+layer
+	::= INTEGER LBRACE make_cells RBRACE
+	;
+
+make_cells
+	::= cell
+	| make_cells cell
+	;
+
+cell
+	::= make_numbers:list COMMA COLOR:s SEMI_COLON
+		{:
+			System.out.printf("Fila: %d Columna: %d Color: %s\n", list.get(0), list.get(1), s);
+		:}
+	;
+
+/* imagenes */
+make_images
+	::= image
+	| make_images image
+	;
+
+image
+	::= INTEGER LBRACE ids RBRACE
+	;
+
+ids
+	::= make_numbers:list
+		{:
+			RESULT = list;
+		:}
+	|
+	;
+
+make_numbers
+	::= INTEGER:n
+		{:
+			List<Integer> numbers = new ArrayList<>();
+			numbers.add(n);
+			RESULT = numbers;
+		:}
+	| make_numbers:list COMMA INTEGER:n
+		{:
+			list.add(n);
+			RESULT = list;
+		:}
+	;
+
+/* usuarios */
+make_users
+	::= user
+	| make_users user
+	;
+
+user
+	::= USER_NAME COLON ids SEMI_COLON
+	;
