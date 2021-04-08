@@ -79,6 +79,6 @@ public class MatrixNode {
 
     @Override
     public String toString() {
-        return "MatrixNode{" + "x=" + x + ", y=" + y + '}';
+        return "MatrixNode{" + "x=" + x + ", y=" + y + ", color=" + color + '}';
     }
 }

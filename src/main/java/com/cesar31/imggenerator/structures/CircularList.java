@@ -29,7 +29,7 @@ public class CircularList {
      *
      * @param node
      */
-    private void insertar(ListNode node) {
+    public void insertar(ListNode node) {
         if (this.top == null) {
             this.top = node;
             node.setNext(node);
@@ -41,6 +41,28 @@ public class CircularList {
             this.top.setPrevious(node);
         }
         this.bottom = node;
+    }
+
+    /**
+     * Buscar nodo
+     *
+     * @param id
+     * @return
+     */
+    public ListNode search(int id) {
+        if (this.top == null) {
+            return null;
+        } else {
+            ListNode aux = this.top;
+            do {
+                if (aux.getId() == id) {
+                    return aux;
+                }
+                aux = aux.getNext();
+            } while (aux != this.top);
+        }
+
+        return null;
     }
 
     /**
@@ -63,7 +85,7 @@ public class CircularList {
                 ListNode aux = this.top;
                 while (aux.getNext() != this.top) {
                     if (aux.getNext().getId() == id) {
-                        if(aux.getNext() == this.bottom) {
+                        if (aux.getNext() == this.bottom) {
                             this.bottom = aux;
                         }
                         ListNode del = aux.getNext();

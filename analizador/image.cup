@@ -1,5 +1,6 @@
 package com.cesar31.imggenerator.parser;
 
+import com.cesar31.imggenerator.model.*;
 import com.cesar31.imggenerator.control.*;
 import com.cesar31.imggenerator.structures.*;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ terminal String USER_NAME, COLOR;
 terminal Integer INTEGER;
 terminal ERROR;
 
-non terminal make_images, image, make_users, user;
+non terminal make_users, user;
 
 non terminal List<Integer> make_numbers, ids;
 non terminal MatrixNode cell;
@@ -46,12 +47,19 @@ non terminal SparseMatrix make_cells;
 non terminal AVLNode layer;
 non terminal AVLTree make_layers;
 non terminal Object data;
+non terminal ListNode image;
+non terminal CircularList make_images;
 
 data
 	::= make_layers:tree
-	{: RESULT = tree; :}
-	| make_images
-	{: System.out.println("imagenes"); :}
+		{:
+			/* Arbol de capas */
+			RESULT = tree;
+		:}
+	| make_images:list
+		{:
+			RESULT = list;
+		:}
 	| make_users
 	{: System.out.println("usuarios"); :}
 	;
@@ -85,12 +93,16 @@ make_cells
 	::= cell:c
 		{:
 			SparseMatrix matrix = new SparseMatrix();
-			matrix.insert(c);
+			if(c != null) {
+				matrix.insert(c);
+			}
 			RESULT = matrix;
 		:}
 	| make_cells:matrix cell:c
 		{:
-			matrix.insert(c);
+			if(c != null) {
+				matrix.insert(c);
+			}
 			RESULT = matrix;
 		:}
 	;
@@ -99,19 +111,42 @@ cell
 	::= make_numbers:list COMMA COLOR:color SEMI_COLON
 		{:
 			/* MatrixNode */
-			RESULT = controller.getMatrixNode(list, color);
-			//System.out.printf("Fila: %d Columna: %d Color: %s\n", list.get(0), list.get(1), s);
+			MatrixNode node = controller.getMatrixNode(list, color);
+			if(node != null) {
+				RESULT = node;
+			} else {
+				/* Error */
+			}
 		:}
 	;
 
 /* imagenes */
 make_images
-	::= image
-	| make_images image
+	::= image:node
+		{:
+			CircularList list = new CircularList();
+			if(node != null) {
+				list.insertar(node);
+			}
+			RESULT = list;
+		:}
+	| make_images:list image:node
+		{:
+			if(node != null) {
+				list.insertar(node);
+			}
+			RESULT = list;
+		:}
 	;
 
 image
-	::= INTEGER LBRACE ids RBRACE
+	::= INTEGER:id LBRACE ids:list RBRACE
+		{:
+			ListNode node = controller.getImage(id, list);
+			if(node != null) {
+				RESULT = node;
+			}
+		:}
 	;
 
 ids
@@ -120,6 +155,7 @@ ids
 			RESULT = list;
 		:}
 	|
+		{: RESULT = new ArrayList<>(); :}
 	;
 
 make_numbers

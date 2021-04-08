@@ -2,10 +2,8 @@ package com.cesar31.imggenerator;
 
 import com.cesar31.imggenerator.control.ControlFile;
 import com.cesar31.imggenerator.control.ParserController;
-import com.cesar31.imggenerator.parser.ImageLex;
-import com.cesar31.imggenerator.parser.ImageParser;
+import com.cesar31.imggenerator.model.Image;
 import com.cesar31.imggenerator.structures.*;
-import java.io.StringReader;
 
 /**
  *
@@ -27,12 +25,32 @@ public class ImageGenerator {
 
         String data = control.readData("/home/cesar31/Java/ImageGenerator/datos/capas.cap");
         //System.out.println(data);
-        Object object = controller.parserFile(data);
+        AVLTree layers = controller.readLayers(data);
+//        if (layers != null) {
+//            AVLNode node = layers.search(3);
+//            if (node != null) {
+//                SparseMatrix matrix = (SparseMatrix) node.getObject();
+//                matrix.generateDotFile();
+//            } else {
+//                System.out.println("null");
+//            }
+//        }
 
-        if (object != null) {
-            AVLTree avl = (AVLTree) object;
-            System.out.println(avl.getSize());
-            avl.generateDotFile();
+        String images = control.readData("/home/cesar31/Java/ImageGenerator/datos/imagenes.im");
+        System.out.println(images);
+        CircularList list = controller.readImages(images);
+        if (list != null) {
+            list.generateDotFile();
+            ListNode node = list.search(2);
+            if (node != null) {
+                if (node.getObject() != null) {
+                    Image img = (Image) node.getObject();
+                    //System.out.println("Image: " + img.getId());
+                    img.getLayers().generateDotFile();
+                }
+            } else {
+                System.out.println("Node null");
+            }
         }
     }
 

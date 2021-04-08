@@ -89,6 +89,39 @@ public class AVLTree {
     }
 
     /**
+     * Buscar
+     *
+     * @param id
+     * @return
+     */
+    public AVLNode search(int id) {
+        if (this.root != null) {
+            return search(this.root, id);
+        }
+
+        return null;
+    }
+
+    /**
+     * Buscar por id
+     *
+     * @param father
+     * @param id
+     * @return
+     */
+    private AVLNode search(AVLNode father, int id) {
+        if (father == null) {
+            return null;
+        } else if (id > father.getId()) {
+            return search(father.getRight(), id);
+        } else if (id < father.getId()) {
+            return search(father.getLeft(), id);
+        } else {
+            return father;
+        }
+    }
+
+    /**
      * Eliminar por id
      *
      * @param id
