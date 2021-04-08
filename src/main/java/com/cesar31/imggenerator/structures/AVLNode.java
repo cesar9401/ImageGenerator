@@ -6,7 +6,7 @@ package com.cesar31.imggenerator.structures;
  */
 public class AVLNode {
 
-    private int id;
+    private String id;
     private AVLNode right;
     private AVLNode left;
 
@@ -15,16 +15,16 @@ public class AVLNode {
     public AVLNode() {
     }
 
-    public AVLNode(int id, Object object) {
+    public AVLNode(String id, Object object) {
         this.id = id;
         this.object = object;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

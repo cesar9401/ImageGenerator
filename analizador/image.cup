@@ -34,21 +34,19 @@ parser code {:
 
 :}
 
-terminal COLON, COMMA, SEMI_COLON, RBRACE, LBRACE;
+terminal COLON, COMMA, SEMI_COLON, RBRACE, LBRACE, ERROR;
 terminal String USER_NAME, COLOR;
 terminal Integer INTEGER;
-terminal ERROR;
-
-non terminal make_users, user;
 
 non terminal List<Integer> make_numbers, ids;
 non terminal MatrixNode cell;
 non terminal SparseMatrix make_cells;
-non terminal AVLNode layer;
-non terminal AVLTree make_layers;
+non terminal AVLNode layer, user;
+non terminal AVLTree make_layers, make_users;
 non terminal Object data;
 non terminal ListNode image;
 non terminal CircularList make_images;
+non terminal String name;
 
 data
 	::= make_layers:tree
@@ -60,8 +58,10 @@ data
 		{:
 			RESULT = list;
 		:}
-	| make_users
-	{: System.out.println("usuarios"); :}
+	| make_users:tree
+		{:
+			RESULT = tree;
+		:}
 	;
 
 /* capas */
@@ -69,12 +69,16 @@ make_layers
 	::= layer:node
 		{:
 			AVLTree tree = new AVLTree();
-			tree.insert(node);
+			if(node != null) {
+				tree.insert(node);
+			}
 			RESULT = tree;
 		:}
 	| make_layers:tree layer:node
 		{:
-			tree.insert(node);
+			if(node != null) {
+				tree.insert(node);
+			}
 			RESULT = tree;
 		:}
 	;
@@ -84,7 +88,7 @@ layer
 		{:
 			/* SparseMatrix */
 			matrix.setId(id);
-			AVLNode node = new AVLNode(id, matrix);
+			AVLNode node = new AVLNode(String.valueOf(id), matrix);
 			RESULT = node;
 		:}
 	;
@@ -174,10 +178,34 @@ make_numbers
 
 /* usuarios */
 make_users
-	::= user
-	| make_users user
+	::= user:node
+		{:
+			AVLTree tree = new AVLTree();
+			if(node != null) {
+				tree.insert(node);
+			}
+			RESULT = tree;
+		:}
+	| make_users:tree user:node
+		{:
+			if(node != null) {
+				tree.insert(node);
+			}
+			RESULT = tree;
+		:}
 	;
 
 user
-	::= USER_NAME COLON ids SEMI_COLON
+	::= name:p COLON ids:list SEMI_COLON
+		{:
+			AVLNode node = controller.getUser(p, list);
+			if(node != null) {
+				RESULT = node;
+			}
+		:}
+	;
+
+name
+	::= USER_NAME:p {: RESULT = p; :}
+	| COLOR:p {: RESULT = p; :}
 	;

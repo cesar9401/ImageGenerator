@@ -27,7 +27,7 @@ public class AVLTree {
      * @param id
      * @param object
      */
-    public void insert(int id, Object object) {
+    public void insert(String id, Object object) {
         AVLNode node = new AVLNode(id, object);
         insert(node);
     }
@@ -55,7 +55,8 @@ public class AVLTree {
     private AVLNode insert(AVLNode node, AVLNode father) {
         AVLNode dad = father;
 
-        if (node.getId() < father.getId()) {
+        /*node.getId() < father.getId()*/
+        if (node.getId().compareTo(father.getId()) < 0) {
             if (father.getLeft() == null) {
                 father.setLeft(node);
             } else {
@@ -94,7 +95,7 @@ public class AVLTree {
      * @param id
      * @return
      */
-    public AVLNode search(int id) {
+    public AVLNode search(String id) {
         if (this.root != null) {
             return search(this.root, id);
         }
@@ -109,12 +110,16 @@ public class AVLTree {
      * @param id
      * @return
      */
-    private AVLNode search(AVLNode father, int id) {
+    private AVLNode search(AVLNode father, String id) {
         if (father == null) {
             return null;
-        } else if (id > father.getId()) {
+
+            /*id > father.getId()*/
+        } else if (id.compareTo(father.getId()) > 0) {
             return search(father.getRight(), id);
-        } else if (id < father.getId()) {
+
+            /*id < father.getId()*/
+        } else if (id.compareTo(father.getId()) < 0) {
             return search(father.getLeft(), id);
         } else {
             return father;
@@ -126,7 +131,7 @@ public class AVLTree {
      *
      * @param id
      */
-    public void delete(int id) {
+    public void delete(String id) {
         if (this.root != null) {
             this.root = delete(id, root);
         } else {
@@ -141,12 +146,14 @@ public class AVLTree {
      * @param father
      * @return
      */
-    private AVLNode delete(int id, AVLNode father) {
+    private AVLNode delete(String id, AVLNode father) {
         AVLNode dad = father;
-
-        if (id < father.getId()) {
+        /*id < father.getId()*/
+        if (id.compareTo(father.getId()) < 0) {
             if (father.getLeft() != null) {
-                if (father.getLeft().getId() == id) {
+
+                /*father.getLeft().getId() == id*/
+                if (father.getLeft().getId().compareTo(id) == 0) {
                     father.setLeft(delete(father.getLeft()));
                 } else {
                     /* Padre -> hijo izquierda */
@@ -165,9 +172,13 @@ public class AVLTree {
             } else {
                 System.out.println("Nodo no encontrado");
             }
-        } else if (id > father.getId()) {
+
+            /*id > father.getId()*/
+        } else if (id.compareTo(father.getId()) > 0) {
             if (father.getRight() != null) {
-                if (father.getRight().getId() == id) {
+
+                /*father.getRight().getId() == id*/
+                if (father.getRight().getId().compareTo(id) == 0) {
                     father.setRight(delete(father.getRight()));
                 } else {
                     /* Padre -> hijo derecha */
@@ -186,7 +197,9 @@ public class AVLTree {
             } else {
                 System.out.println("Nodo no encontrado");
             }
-        } else if (id == father.getId()) {
+            
+            /*id == father.getId()*/
+        } else if (id.compareTo(father.getId()) == 0) {
             dad = delete(father);
             if (dad != null) {
                 System.out.println("before: " + dad.getFactor());

@@ -26,18 +26,19 @@ public class ImageGenerator {
         String data = control.readData("/home/cesar31/Java/ImageGenerator/datos/capas.cap");
         //System.out.println(data);
         AVLTree layers = controller.readLayers(data);
-//        if (layers != null) {
-//            AVLNode node = layers.search(3);
-//            if (node != null) {
-//                SparseMatrix matrix = (SparseMatrix) node.getObject();
-//                matrix.generateDotFile();
-//            } else {
-//                System.out.println("null");
-//            }
-//        }
+        if (layers != null) {
+            //layers.generateDotFile();
+            AVLNode node = layers.search("5");
+            if (node != null) {
+                SparseMatrix matrix = (SparseMatrix) node.getObject();
+                matrix.generateDotFile();
+            } else {
+                System.out.println("null");
+            }
+        }
 
         String images = control.readData("/home/cesar31/Java/ImageGenerator/datos/imagenes.im");
-        System.out.println(images);
+        //System.out.println(images);
         CircularList list = controller.readImages(images);
         if (list != null) {
             list.generateDotFile();
@@ -47,10 +48,20 @@ public class ImageGenerator {
                     Image img = (Image) node.getObject();
                     //System.out.println("Image: " + img.getId());
                     img.getLayers().generateDotFile();
+                    
+                    //AVLNode avlNode = (AVLNode) img.getLayers().getNode(5).getObject();
                 }
             } else {
                 System.out.println("Node null");
             }
+        }
+        
+        String usrs = control.readData("/home/cesar31/Java/ImageGenerator/datos/usuarios.usr");
+        System.out.println(usrs);
+        AVLTree users = controller.readUsers(usrs);
+        if(users != null) {
+            System.out.println("Usuarios: " + users.getSize());
+            users.generateDotFile();
         }
     }
 
@@ -98,25 +109,23 @@ public class ImageGenerator {
     public static void AVLTest() {
         AVLTree tree = new AVLTree();
 
-        tree.insert(18, "objecto");
-        tree.insert(9, "objecto");
-        tree.insert(25, "objecto");
-        tree.insert(7, "objecto");
-        tree.insert(23, "objecto");
-        tree.insert(29, "objecto");
-        tree.insert(2, "objecto");
-        tree.insert(11, "objecto");
-        tree.insert(10, "objecto");
-        tree.insert(21, "objecto");
-        tree.insert(24, "objecto");
-        tree.insert(8, "objecto");
-        tree.insert(27, "objeto");
-        tree.insert(1, "objeto");
-
-        tree.delete(21);
-        tree.delete(24);
-        tree.delete(18);
-
+//        tree.insert(18, "objecto");
+//        tree.insert(9, "objecto");
+//        tree.insert(25, "objecto");
+//        tree.insert(7, "objecto");
+//        tree.insert(23, "objecto");
+//        tree.insert(29, "objecto");
+//        tree.insert(2, "objecto");
+//        tree.insert(11, "objecto");
+//        tree.insert(10, "objecto");
+//        tree.insert(21, "objecto");
+//        tree.insert(24, "objecto");
+//        tree.insert(8, "objecto");
+//        tree.insert(27, "objeto");
+//        tree.insert(1, "objeto");
+//        tree.delete(21);
+//        tree.delete(24);
+//        tree.delete(18);
         //System.out.println("Size: " + tree.getSize());
         tree.generateDotFile();
     }

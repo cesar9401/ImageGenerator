@@ -8,13 +8,13 @@ package com.cesar31.imggenerator.parser;
 /** CUP generated class containing symbol constants. */
 public class ImageParserSym {
   /* terminals */
-  public static final int COLOR = 8;
+  public static final int COLOR = 9;
   public static final int LBRACE = 6;
-  public static final int INTEGER = 9;
+  public static final int INTEGER = 10;
   public static final int SEMI_COLON = 4;
-  public static final int USER_NAME = 7;
+  public static final int USER_NAME = 8;
   public static final int COLON = 2;
-  public static final int ERROR = 10;
+  public static final int ERROR = 7;
   public static final int EOF = 0;
   public static final int error = 1;
   public static final int COMMA = 3;
@@ -27,10 +27,10 @@ public class ImageParserSym {
   "SEMI_COLON",
   "RBRACE",
   "LBRACE",
+  "ERROR",
   "USER_NAME",
   "COLOR",
-  "INTEGER",
-  "ERROR"
+  "INTEGER"
   };
 }
 

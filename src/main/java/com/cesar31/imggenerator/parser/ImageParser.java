@@ -36,13 +36,13 @@ public class ImageParser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\024\000\002\012\003\000\002\002\004\000\002\012" +
-    "\003\000\002\012\003\000\002\011\003\000\002\011\004" +
-    "\000\002\010\006\000\002\007\003\000\002\007\004\000" +
-    "\002\006\006\000\002\014\003\000\002\014\004\000\002" +
-    "\013\006\000\002\005\003\000\002\005\002\000\002\004" +
-    "\003\000\002\004\005\000\002\002\003\000\002\002\004" +
-    "\000\002\003\006" });
+    "\000\026\000\002\012\003\000\002\002\004\000\002\012" +
+    "\003\000\002\012\003\000\002\010\003\000\002\010\004" +
+    "\000\002\006\006\000\002\005\003\000\002\005\004\000" +
+    "\002\004\006\000\002\014\003\000\002\014\004\000\002" +
+    "\013\006\000\002\003\003\000\002\003\002\000\002\002" +
+    "\003\000\002\002\005\000\002\011\003\000\002\011\004" +
+    "\000\002\007\006\000\002\015\003\000\002\015\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -50,28 +50,30 @@ public class ImageParser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\045\000\006\011\005\013\004\001\002\000\004\010" +
-    "\046\001\002\000\004\004\043\001\002\000\006\002\ufff7" +
-    "\013\ufff7\001\002\000\006\002\ufff0\011\ufff0\001\002\000" +
-    "\004\002\042\001\002\000\006\002\001\013\027\001\002" +
-    "\000\006\002\ufffd\013\ufffd\001\002\000\006\002\ufffe\011" +
-    "\005\001\002\000\006\002\uffff\013\015\001\002\000\004" +
-    "\010\017\001\002\000\006\002\ufff6\013\ufff6\001\002\000" +
-    "\006\007\ufff3\013\020\001\002\000\010\005\ufff2\006\ufff2" +
-    "\007\ufff2\001\002\000\004\007\025\001\002\000\010\005" +
-    "\023\006\ufff4\007\ufff4\001\002\000\004\013\024\001\002" +
-    "\000\010\005\ufff1\006\ufff1\007\ufff1\001\002\000\006\002" +
-    "\ufff5\013\ufff5\001\002\000\006\002\uffef\011\uffef\001\002" +
-    "\000\004\010\031\001\002\000\006\002\ufffc\013\ufffc\001" +
-    "\002\000\004\013\020\001\002\000\006\007\ufffa\013\ufffa" +
-    "\001\002\000\006\007\041\013\020\001\002\000\004\005" +
-    "\035\001\002\000\006\012\036\013\024\001\002\000\004" +
-    "\006\037\001\002\000\006\007\ufff8\013\ufff8\001\002\000" +
-    "\006\007\ufff9\013\ufff9\001\002\000\006\002\ufffb\013\ufffb" +
-    "\001\002\000\004\002\000\001\002\000\006\006\ufff3\013" +
-    "\020\001\002\000\004\006\045\001\002\000\006\002\uffee" +
-    "\011\uffee\001\002\000\006\007\ufff3\013\020\001\002\000" +
-    "\006\005\035\007\ufff4\001\002" });
+    "\000\047\000\010\012\007\013\004\014\006\001\002\000" +
+    "\004\004\uffec\001\002\000\004\004\047\001\002\000\004" +
+    "\010\045\001\002\000\004\004\uffed\001\002\000\006\002" +
+    "\ufff7\014\ufff7\001\002\000\010\002\ufff0\012\ufff0\013\ufff0" +
+    "\001\002\000\004\002\044\001\002\000\006\002\001\014" +
+    "\031\001\002\000\006\002\ufffd\014\ufffd\001\002\000\010" +
+    "\002\ufffe\012\007\013\004\001\002\000\006\002\uffff\014" +
+    "\017\001\002\000\004\010\021\001\002\000\006\002\ufff6" +
+    "\014\ufff6\001\002\000\006\007\ufff3\014\022\001\002\000" +
+    "\010\005\ufff2\006\ufff2\007\ufff2\001\002\000\004\007\027" +
+    "\001\002\000\010\005\025\006\ufff4\007\ufff4\001\002\000" +
+    "\004\014\026\001\002\000\010\005\ufff1\006\ufff1\007\ufff1" +
+    "\001\002\000\006\002\ufff5\014\ufff5\001\002\000\010\002" +
+    "\uffef\012\uffef\013\uffef\001\002\000\004\010\033\001\002" +
+    "\000\006\002\ufffc\014\ufffc\001\002\000\004\014\022\001" +
+    "\002\000\006\007\ufffa\014\ufffa\001\002\000\006\007\043" +
+    "\014\022\001\002\000\004\005\037\001\002\000\006\013" +
+    "\040\014\026\001\002\000\004\006\041\001\002\000\006" +
+    "\007\ufff8\014\ufff8\001\002\000\006\007\ufff9\014\ufff9\001" +
+    "\002\000\006\002\ufffb\014\ufffb\001\002\000\004\002\000" +
+    "\001\002\000\006\007\ufff3\014\022\001\002\000\006\005" +
+    "\037\007\ufff4\001\002\000\006\006\ufff3\014\022\001\002" +
+    "\000\004\006\051\001\002\000\010\002\uffee\012\uffee\013" +
+    "\uffee\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -79,22 +81,23 @@ public class ImageParser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\045\000\020\002\012\003\006\010\011\011\010\012" +
-    "\007\013\005\014\013\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\010\027\001\001\000\002\001\001\000\004" +
-    "\003\025\001\001\000\004\013\015\001\001\000\002\001" +
-    "\001\000\002\001\001\000\006\004\021\005\020\001\001" +
+    "\000\047\000\022\006\013\007\010\010\012\011\014\012" +
+    "\011\013\007\014\015\015\004\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\006\031\001\001\000\002\001\001\000\006\007\027\015" +
+    "\004\001\001\000\004\013\017\001\001\000\002\001\001" +
+    "\000\002\001\001\000\006\002\023\003\022\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\010\004" +
-    "\033\006\031\007\032\001\001\000\002\001\001\000\006" +
-    "\004\033\006\037\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\006\004\021\005" +
-    "\043\001\001\000\002\001\001\000\002\001\001\000\012" +
-    "\004\046\005\020\006\031\007\032\001\001\000\002\001" +
-    "\001" });
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\010\002\035" +
+    "\004\033\005\034\001\001\000\002\001\001\000\006\002" +
+    "\035\004\041\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\012\002\045\003\022" +
+    "\004\033\005\034\001\001\000\002\001\001\000\006\002" +
+    "\023\003\047\001\001\000\002\001\001\000\002\001\001" +
+    "" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -228,7 +231,12 @@ class CUP$ImageParser$actions {
           case 3: // data ::= make_users 
             {
               Object RESULT =null;
-		 System.out.println("usuarios"); 
+		int treeleft = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).left;
+		int treeright = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).right;
+		AVLTree tree = (AVLTree)((java_cup.runtime.Symbol) CUP$ImageParser$stack.peek()).value;
+		
+			RESULT = tree;
+		
               CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("data",8, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
@@ -242,10 +250,12 @@ class CUP$ImageParser$actions {
 		AVLNode node = (AVLNode)((java_cup.runtime.Symbol) CUP$ImageParser$stack.peek()).value;
 		
 			AVLTree tree = new AVLTree();
-			tree.insert(node);
+			if(node != null) {
+				tree.insert(node);
+			}
 			RESULT = tree;
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_layers",7, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_layers",6, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -260,10 +270,12 @@ class CUP$ImageParser$actions {
 		int noderight = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).right;
 		AVLNode node = (AVLNode)((java_cup.runtime.Symbol) CUP$ImageParser$stack.peek()).value;
 		
-			tree.insert(node);
+			if(node != null) {
+				tree.insert(node);
+			}
 			RESULT = tree;
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_layers",7, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_layers",6, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -280,10 +292,10 @@ class CUP$ImageParser$actions {
 		
 			/* SparseMatrix */
 			matrix.setId(id);
-			AVLNode node = new AVLNode(id, matrix);
+			AVLNode node = new AVLNode(String.valueOf(id), matrix);
 			RESULT = node;
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("layer",6, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("layer",4, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -301,7 +313,7 @@ class CUP$ImageParser$actions {
 			}
 			RESULT = matrix;
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_cells",5, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_cells",3, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -321,7 +333,7 @@ class CUP$ImageParser$actions {
 			}
 			RESULT = matrix;
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_cells",5, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_cells",3, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -344,7 +356,7 @@ class CUP$ImageParser$actions {
 				/* Error */
 			}
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("cell",4, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("cell",2, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -416,7 +428,7 @@ class CUP$ImageParser$actions {
 		
 			RESULT = list;
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("ids",3, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("ids",1, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -425,7 +437,7 @@ class CUP$ImageParser$actions {
             {
               List<Integer> RESULT =null;
 		 RESULT = new ArrayList<>(); 
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("ids",3, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("ids",1, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -441,7 +453,7 @@ class CUP$ImageParser$actions {
 			numbers.add(n);
 			RESULT = numbers;
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_numbers",2, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_numbers",0, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
@@ -459,34 +471,89 @@ class CUP$ImageParser$actions {
 			list.add(n);
 			RESULT = list;
 		
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_numbers",2, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-2)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_numbers",0, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-2)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 17: // make_users ::= user 
             {
-              Object RESULT =null;
-
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_users",0, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              AVLTree RESULT =null;
+		int nodeleft = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).left;
+		int noderight = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).right;
+		AVLNode node = (AVLNode)((java_cup.runtime.Symbol) CUP$ImageParser$stack.peek()).value;
+		
+			AVLTree tree = new AVLTree();
+			if(node != null) {
+				tree.insert(node);
+			}
+			RESULT = tree;
+		
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_users",7, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 18: // make_users ::= make_users user 
             {
-              Object RESULT =null;
-
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_users",0, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+              AVLTree RESULT =null;
+		int treeleft = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)).left;
+		int treeright = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)).right;
+		AVLTree tree = (AVLTree)((java_cup.runtime.Symbol) CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)).value;
+		int nodeleft = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).left;
+		int noderight = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).right;
+		AVLNode node = (AVLNode)((java_cup.runtime.Symbol) CUP$ImageParser$stack.peek()).value;
+		
+			if(node != null) {
+				tree.insert(node);
+			}
+			RESULT = tree;
+		
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("make_users",7, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // user ::= USER_NAME COLON ids SEMI_COLON 
+          case 19: // user ::= name COLON ids SEMI_COLON 
             {
-              Object RESULT =null;
+              AVLNode RESULT =null;
+		int pleft = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)).left;
+		int pright = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)).right;
+		String p = (String)((java_cup.runtime.Symbol) CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)).value;
+		int listleft = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)).left;
+		int listright = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)).right;
+		List<Integer> list = (List<Integer>)((java_cup.runtime.Symbol) CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-1)).value;
+		
+			AVLNode node = controller.getUser(p, list);
+			if(node != null) {
+				RESULT = node;
+			}
+		
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("user",5, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+            }
+          return CUP$ImageParser$result;
 
-              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("user",1, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.elementAt(CUP$ImageParser$top-3)), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 20: // name ::= USER_NAME 
+            {
+              String RESULT =null;
+		int pleft = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).left;
+		int pright = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).right;
+		String p = (String)((java_cup.runtime.Symbol) CUP$ImageParser$stack.peek()).value;
+		 RESULT = p; 
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("name",11, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
+            }
+          return CUP$ImageParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 21: // name ::= COLOR 
+            {
+              String RESULT =null;
+		int pleft = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).left;
+		int pright = ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()).right;
+		String p = (String)((java_cup.runtime.Symbol) CUP$ImageParser$stack.peek()).value;
+		 RESULT = p; 
+              CUP$ImageParser$result = parser.getSymbolFactory().newSymbol("name",11, ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ImageParser$stack.peek()), RESULT);
             }
           return CUP$ImageParser$result;
 

@@ -45,11 +45,11 @@ HexColor = #?([0-9a-fA-F]{3,3}|[0-9a-fA-F]{6,6})
 	{Integer}
 	{ return symbol(INTEGER, Integer.valueOf(yytext())); }
 
-	{UserName}
-	{ return symbol(USER_NAME, String.valueOf(yytext())); }
-
 	{HexColor}
 	{ return symbol(COLOR, String.valueOf(yytext())); }
+
+	{UserName}
+	{ return symbol(USER_NAME, String.valueOf(yytext())); }
 
 	":"
 	{ return symbol(COLON); }

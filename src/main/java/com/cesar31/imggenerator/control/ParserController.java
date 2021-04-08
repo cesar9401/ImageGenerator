@@ -1,6 +1,7 @@
 package com.cesar31.imggenerator.control;
 
 import com.cesar31.imggenerator.model.Image;
+import com.cesar31.imggenerator.model.User;
 import com.cesar31.imggenerator.parser.ImageLex;
 import com.cesar31.imggenerator.parser.ImageParser;
 import com.cesar31.imggenerator.structures.AVLNode;
@@ -120,12 +121,12 @@ public class ParserController {
         if (this.layersTree != null) {
             /* Agregar capas de la imagen */
             layers.forEach(i -> {
-                AVLNode node = layersTree.search(i);
+                AVLNode node = layersTree.search(String.valueOf(i));
                 if (node != null) {
-                    /* Insertar nodo en lista */
-                    img.getLayers().insertar(node.getId(), node);
+                    /* Insertar nodo de avl en lista */
+                    img.getLayers().insertar(Integer.valueOf(node.getId()), node);
                 } else {
-                    System.out.println("La capa: " + i + "que se ha intentado cargar a la imagen: " + id + ", no existe");
+                    System.out.println("La capa: " + i + " que se ha intentado cargar a la imagen: " + id + ", no existe");
                 }
             });
         } else {
@@ -134,5 +135,27 @@ public class ParserController {
         }
         System.out.println("Image: " + img.getId());
         return new ListNode(id, img);
+    }
+
+    public AVLNode getUser(String id, List<Integer> imgs) {
+        User user = new User(id);
+        if (this.imgList != null) {
+            /* Agregar imagenes a los usuarios */
+            imgs.forEach(i -> {
+                ListNode node = imgList.search(i);
+                if (node != null) {
+                    /* node apunta a los demas objectos en lista de imganes */
+                    user.getImages().insertar(i, node);
+                } else {
+                    System.out.println("La imagen " + i + " que se intanta cargar al usuario " + id + ", no existe");
+                } 
+            });
+
+        } else {
+            System.out.println("No se han cargado imagenes");
+            return null;
+        }
+
+        return new AVLNode(id, user);
     }
 }
