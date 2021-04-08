@@ -45,13 +45,13 @@ public class SparseMatrix {
         MatrixNode node = new MatrixNode(x, y, color);
         insert(node);
     }
-
+    
     /**
      * Insertar nodo en matriz
      *
      * @param node
      */
-    private void insert(MatrixNode node) {
+    public void insert(MatrixNode node) {
         int x = node.getX();
         int y = node.getY();
 
@@ -86,7 +86,7 @@ public class SparseMatrix {
                         break;
                     }
                     aux = aux.getRight();
-                    System.out.println(aux.toString());
+                    //System.out.println(aux.toString());
                 }
 
                 if (!inserted) {

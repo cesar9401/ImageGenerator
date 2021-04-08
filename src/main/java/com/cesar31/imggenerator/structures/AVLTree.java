@@ -29,6 +29,15 @@ public class AVLTree {
      */
     public void insert(int id, Object object) {
         AVLNode node = new AVLNode(id, object);
+        insert(node);
+    }
+
+    /**
+     * Insertar nuevo nodo
+     *
+     * @param node
+     */
+    public void insert(AVLNode node) {
         if (this.root == null) {
             this.root = node;
         } else {

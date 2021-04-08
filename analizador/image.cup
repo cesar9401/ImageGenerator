@@ -1,5 +1,7 @@
 package com.cesar31.imggenerator.parser;
 
+import com.cesar31.imggenerator.control.*;
+import com.cesar31.imggenerator.structures.*;
 import java.util.ArrayList;
 import java.util.List;
 import java_cup.runtime.Symbol;
@@ -8,8 +10,11 @@ class ImageParser;
 
 parser code {:
 
-	public ImageParser(ImageLex lex) {
+	private ParserController controller;
+
+	public ImageParser(ImageLex lex, ParserController controller) {
 		super(lex);
+		this.controller = controller;
 	}
 
 	public void syntax_error(Symbol cur_token) {
@@ -22,6 +27,10 @@ parser code {:
         System.out.println("");
 	}
 
+	public ParserController getController() {
+		return controller;
+	}
+
 :}
 
 terminal COLON, COMMA, SEMI_COLON, RBRACE, LBRACE;
@@ -29,16 +38,18 @@ terminal String USER_NAME, COLOR;
 terminal Integer INTEGER;
 terminal ERROR;
 
-non terminal data;
-non terminal make_layers, layer, make_cells, cell;
-non terminal make_images, image;
-non terminal make_users, user;
+non terminal make_images, image, make_users, user;
 
 non terminal List<Integer> make_numbers, ids;
+non terminal MatrixNode cell;
+non terminal SparseMatrix make_cells;
+non terminal AVLNode layer;
+non terminal AVLTree make_layers;
+non terminal Object data;
 
 data
-	::= make_layers
-	{: System.out.println("capas"); :}
+	::= make_layers:tree
+	{: RESULT = tree; :}
 	| make_images
 	{: System.out.println("imagenes"); :}
 	| make_users
@@ -47,23 +58,49 @@ data
 
 /* capas */
 make_layers
-	::= layer
-	| make_layers layer
+	::= layer:node
+		{:
+			AVLTree tree = new AVLTree();
+			tree.insert(node);
+			RESULT = tree;
+		:}
+	| make_layers:tree layer:node
+		{:
+			tree.insert(node);
+			RESULT = tree;
+		:}
 	;
 
 layer
-	::= INTEGER LBRACE make_cells RBRACE
+	::= INTEGER:id LBRACE make_cells:matrix RBRACE
+		{:
+			/* SparseMatrix */
+			matrix.setId(id);
+			AVLNode node = new AVLNode(id, matrix);
+			RESULT = node;
+		:}
 	;
 
 make_cells
-	::= cell
-	| make_cells cell
+	::= cell:c
+		{:
+			SparseMatrix matrix = new SparseMatrix();
+			matrix.insert(c);
+			RESULT = matrix;
+		:}
+	| make_cells:matrix cell:c
+		{:
+			matrix.insert(c);
+			RESULT = matrix;
+		:}
 	;
 
 cell
-	::= make_numbers:list COMMA COLOR:s SEMI_COLON
+	::= make_numbers:list COMMA COLOR:color SEMI_COLON
 		{:
-			System.out.printf("Fila: %d Columna: %d Color: %s\n", list.get(0), list.get(1), s);
+			/* MatrixNode */
+			RESULT = controller.getMatrixNode(list, color);
+			//System.out.printf("Fila: %d Columna: %d Color: %s\n", list.get(0), list.get(1), s);
 		:}
 	;
 
