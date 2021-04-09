@@ -72,7 +72,7 @@ public class SparseMatrix {
 
                 rowHead.setRight(node);
                 col.setLetf(node);
-            } else if(col.getX() < x){
+            } else if (col.getX() < x) {
                 MatrixNode aux = col;
                 boolean inserted = false;
                 while (aux.getRight() != null) {
@@ -94,7 +94,7 @@ public class SparseMatrix {
                     aux.setRight(node);
                     node.setLetf(aux);
                 }
-            } else if(col.getX() == x) {
+            } else if (col.getX() == x) {
                 //System.out.println("Ya insertado x : " + node.toString());
             }
         }
@@ -112,7 +112,7 @@ public class SparseMatrix {
 
                 columnHead.setDown(node);
                 row.setUp(node);
-            } else if(row.getY() < y) {
+            } else if (row.getY() < y) {
                 MatrixNode aux = row;
                 boolean inserted = false;
                 while (aux.getDown() != null) {
@@ -459,6 +459,25 @@ public class SparseMatrix {
 
     private String nodeToNode(MatrixNode n, MatrixNode p) {
         return "\tnode" + n.getX() + "_" + n.getY() + " -> node" + p.getX() + "_" + p.getY() + ";\n";
+    }
+
+    private int getSize() {
+        /* columnas */
+        int col = 0;
+        MatrixNode aux = this.root.getRight();
+        while (aux != null) {
+            col = aux.getX();
+            aux = aux.getRight();
+        }
+
+        int row = 0;
+        aux = this.root.getDown();
+        while (aux != null) {
+            row = aux.getY();
+            aux = aux.getDown();
+        }
+
+        return Math.max(row, col);
     }
 
     public void viewRows() {
