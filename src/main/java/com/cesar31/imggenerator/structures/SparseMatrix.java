@@ -8,7 +8,7 @@ import java.io.IOException;
  * @author cesar31
  */
 public class SparseMatrix {
-    
+
     /* Propiedades de SparseMatrix - Capas para las Imagenes */
     private int id;
     private SparseMatrix next;
@@ -28,7 +28,7 @@ public class SparseMatrix {
         this.rows = 0;
         this.columns = 0;
     }
-    
+
     public SparseMatrix(int id) {
         this();
         this.id = id;
@@ -43,9 +43,10 @@ public class SparseMatrix {
      */
     public void insert(int x, int y, String color) {
         MatrixNode node = new MatrixNode(x, y, color);
+        //System.out.println("insertar: " + node.toString());
         insert(node);
     }
-    
+
     /**
      * Insertar nodo en matriz
      *
@@ -71,7 +72,7 @@ public class SparseMatrix {
 
                 rowHead.setRight(node);
                 col.setLetf(node);
-            } else {
+            } else if(col.getX() < x){
                 MatrixNode aux = col;
                 boolean inserted = false;
                 while (aux.getRight() != null) {
@@ -86,13 +87,15 @@ public class SparseMatrix {
                         break;
                     }
                     aux = aux.getRight();
-                    //System.out.println(aux.toString());
+                    //System.out.println(tmp.toString());
                 }
 
                 if (!inserted) {
                     aux.setRight(node);
                     node.setLetf(aux);
                 }
+            } else if(col.getX() == x) {
+                //System.out.println("Ya insertado x : " + node.toString());
             }
         }
 
@@ -109,7 +112,7 @@ public class SparseMatrix {
 
                 columnHead.setDown(node);
                 row.setUp(node);
-            } else {
+            } else if(row.getY() < y) {
                 MatrixNode aux = row;
                 boolean inserted = false;
                 while (aux.getDown() != null) {
@@ -130,6 +133,8 @@ public class SparseMatrix {
                     aux.setDown(node);
                     node.setUp(aux);
                 }
+            } else if (row.getY() == y) {
+                //System.out.println("Ya insertado y : " + node.toString());
             }
         }
     }
@@ -142,15 +147,18 @@ public class SparseMatrix {
      * @return
      */
     public MatrixNode searchNode(int row, int column) {
+        //System.out.println("row: " + row + " col: " + column);
         MatrixNode rowHead = getRow(row, false);
         if (rowHead != null) {
-            MatrixNode aux = rowHead.getRight();
-            while (aux != null) {
-                if (aux.getX() == column) {
-                    System.out.println("aux");
-                    return aux;
+            MatrixNode tmp = rowHead.getRight();
+            while (tmp != null) {
+                if (tmp.getX() == column) {
+                    //System.out.println("busqueda: " + tmp.toString());
+                    return tmp;
+                } else {
+                    //System.out.println("aux no match: " + tmp.toString());
                 }
-                aux = aux.getRight();
+                tmp = tmp.getRight();
             }
         }
 
@@ -287,7 +295,7 @@ public class SparseMatrix {
                         column.setRight(aux.getRight());
                         column.setLetf(aux);
 
-                        /* Punteros para aux */
+                        /* Punteros para tmp */
                         aux.getRight().setLetf(column);
                         aux.setRight(column);
 
@@ -321,7 +329,7 @@ public class SparseMatrix {
 
     public String getDotString() {
         String graph = "digraph graph_name {\n\n";
-        graph += "\tnode [shape = box]\n\n";
+        graph += "\tnode [shape = box style = filled ];\n\n";
 
         graph += getName(root) + "[ label = \"Matriz\", width = 1.5, group = 1];\n\n";
         graph += "\te0[ shape = point, width = 0 ];\n";
@@ -396,7 +404,8 @@ public class SparseMatrix {
         while (aux != null) {
             MatrixNode aux1 = aux.getRight();
             while (aux1 != null) {
-                graph += getName(aux1) + "[ label = \"" + aux1.getColor() + "\" width = 1.5 group = " + (aux1.getX() + 1) + "]\n";
+                //System.out.println("dot: " + aux1.toString());
+                graph += getName(aux1) + "[ label = \"" + aux1.getColor() + "\" fillcolor = \"" + aux1.getColor() + "\" width = 1.5 group = " + (aux1.getX() + 1) + "];\n";
                 aux1 = aux1.getRight();
             }
             graph += "\n";

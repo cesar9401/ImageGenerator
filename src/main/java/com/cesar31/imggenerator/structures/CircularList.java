@@ -11,12 +11,14 @@ public class CircularList {
 
     private ListNode top;
     private ListNode bottom;
+    private boolean inserted;
 
     private final String LIST_D = "circular.dot";
     private final String LIST_P = "circular.png";
     private final String COMMAND = "dot -Tpng " + LIST_D + " -o " + LIST_P;
 
     public CircularList() {
+        this.inserted = false;
     }
 
     public void insertar(int id, Object object) {
@@ -30,17 +32,34 @@ public class CircularList {
      * @param node
      */
     public void insertar(ListNode node) {
+        this.inserted = false;
+
         if (this.top == null) {
             this.top = node;
             node.setNext(node);
             node.setPrevious(node);
+            this.bottom = node;
+            this.inserted = true;
         } else {
-            this.bottom.setNext(node);
-            node.setPrevious(this.bottom);
-            node.setNext(this.top);
-            this.top.setPrevious(node);
+            ListNode aux = this.top;
+            inserted = true;
+            do {
+                if (aux.getId() == node.getId()) {
+                    /* No insertar */
+                    inserted = false;
+                    break;
+                }
+                aux = aux.getNext();
+            } while (aux.getNext() != this.bottom);
+
+            if (inserted) {
+                this.bottom.setNext(node);
+                node.setPrevious(this.bottom);
+                node.setNext(this.top);
+                this.top.setPrevious(node);
+                this.bottom = node;
+            }
         }
-        this.bottom = node;
     }
 
     /**
@@ -147,5 +166,9 @@ public class CircularList {
 
     public ListNode getBottom() {
         return bottom;
+    }
+
+    public boolean isInserted() {
+        return inserted;
     }
 }

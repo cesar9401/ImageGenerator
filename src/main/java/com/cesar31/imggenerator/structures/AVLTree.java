@@ -12,6 +12,8 @@ public class AVLTree {
     private AVLNode root;
     private int size;
     private String graph;
+    private boolean exists;
+    private boolean deleted;
 
     private final String AVL_D = "avl.dot";
     private final String AVL_P = "avl.png";
@@ -19,6 +21,8 @@ public class AVLTree {
 
     public AVLTree() {
         this.size = 0;
+        this.exists = false;
+        this.deleted = false;
     }
 
     /**
@@ -54,6 +58,7 @@ public class AVLTree {
      */
     private AVLNode insert(AVLNode node, AVLNode father) {
         AVLNode dad = father;
+        exists = false;
 
         /*node.getId() < father.getId()*/
         if (node.getId().compareTo(father.getId()) < 0) {
@@ -70,7 +75,7 @@ public class AVLTree {
                     }
                 }
             }
-        } else {
+        } else if (node.getId().compareTo(father.getId()) > 0) {
             if (father.getRight() == null) {
                 father.setRight(node);
             } else {
@@ -84,6 +89,8 @@ public class AVLTree {
                     }
                 }
             }
+        } else if (node.getId().compareTo(father.getId()) == 0) {
+            exists = true;
         }
 
         return dad;
@@ -132,6 +139,8 @@ public class AVLTree {
      * @param id
      */
     public void delete(String id) {
+        this.deleted = false;
+
         if (this.root != null) {
             this.root = delete(id, root);
         } else {
@@ -197,12 +206,11 @@ public class AVLTree {
             } else {
                 System.out.println("Nodo no encontrado");
             }
-            
+
             /*id == father.getId()*/
         } else if (id.compareTo(father.getId()) == 0) {
             dad = delete(father);
             if (dad != null) {
-                System.out.println("before: " + dad.getFactor());
 
                 /* Factor de equilibrio */
                 if (dad.getFactor() == 2) {
@@ -222,7 +230,6 @@ public class AVLTree {
                         dad = leftRotation(dad);
                     }
                 }
-                System.out.println("after: " + dad.getFactor());
             }
         }
 
@@ -244,7 +251,6 @@ public class AVLTree {
         if (!right && !left) {
             /* Nodo hoja */
             node = null;
-
         } else if (right && left) {
             /* Nodo con dos hijos */
             AVLNode dad = lowerRight(node.getRight());
@@ -255,11 +261,11 @@ public class AVLTree {
             dad.setRight(node.getRight());
 
             node = dad;
-
         } else if (right || left) {
             /*Tiene un hijo hijos */
             node = right ? node.getRight() : node.getLeft();
         }
+        this.deleted = true;
         return node;
     }
 
@@ -345,6 +351,7 @@ public class AVLTree {
     }
 
     public int getSize() {
+        this.size = 0;
         getSize(root);
         return size;
     }
@@ -439,5 +446,17 @@ public class AVLTree {
     private String getPointers(AVLNode father, AVLNode son, boolean right) {
         return right ? "\tnode" + father.getId() + ":C1 -> node" + son.getId() + ";\n" : "\tnode" + father.getId() + ":C0 -> node" + son.getId() + ";\n";
         //return "\tnode" + father.getId() + " -> node" + son.getId() + ";\n";
+    }
+
+    public boolean exists() {
+        return exists;
+    }
+
+    public boolean deleted() {
+        return deleted;
+    }
+
+    public AVLNode getRoot() {
+        return root;
     }
 }

@@ -82,8 +82,7 @@ public class ObjectList {
         ListNode tmp = null;
         if (this.root != null) {
             if (this.root.getId() == id) {
-                tmp = null;
-                return tmp;
+                return this.root;
             } else {
                 ListNode aux = this.root;
                 while (aux.getNext() != null) {
@@ -91,6 +90,7 @@ public class ObjectList {
                         tmp = aux.getNext();
                         return tmp;
                     }
+                    aux = aux.getNext();
                 }
             }
         }

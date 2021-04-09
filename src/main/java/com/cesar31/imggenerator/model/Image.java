@@ -6,7 +6,7 @@ import com.cesar31.imggenerator.structures.ObjectList;
  *
  * @author cesar31
  */
-public class Image {
+ public class Image {
 
     private int id;
     private ObjectList layers;

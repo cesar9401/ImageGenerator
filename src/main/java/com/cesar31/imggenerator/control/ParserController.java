@@ -102,7 +102,7 @@ public class ParserController {
     public MatrixNode getMatrixNode(List<Integer> cells, String color) {
         MatrixNode node = null;
         if (cells.size() == 2) {
-            node = new MatrixNode(cells.get(0), cells.get(1), color);
+            node = new MatrixNode(cells.get(1), cells.get(0), color);
             //System.out.println(node.toString());
         }
 
@@ -133,7 +133,7 @@ public class ParserController {
             System.out.println("No se han cargado capas");
             return null;
         }
-        System.out.println("Image: " + img.getId());
+        //System.out.println("Image: " + img.getId());
         return new ListNode(id, img);
     }
 

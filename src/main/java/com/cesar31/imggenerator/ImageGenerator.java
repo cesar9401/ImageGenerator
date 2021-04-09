@@ -3,7 +3,9 @@ package com.cesar31.imggenerator;
 import com.cesar31.imggenerator.control.ControlFile;
 import com.cesar31.imggenerator.control.ParserController;
 import com.cesar31.imggenerator.model.Image;
+import com.cesar31.imggenerator.model.User;
 import com.cesar31.imggenerator.structures.*;
+import com.cesar31.imggenerator.ui.MainFrame;
 
 /**
  *
@@ -16,7 +18,13 @@ public class ImageGenerator {
         //AVLTest();
         //objectListTest();
         //circularListTest();
-        parserTest();
+        //parserTest();
+
+        java.awt.EventQueue.invokeLater(() -> {
+            MainFrame view = new MainFrame();
+            view.setLocationRelativeTo(null);
+            view.setVisible(true);
+        });
     }
 
     public static void parserTest() {
@@ -26,42 +34,60 @@ public class ImageGenerator {
         String data = control.readData("/home/cesar31/Java/ImageGenerator/datos/capas.cap");
         //System.out.println(data);
         AVLTree layers = controller.readLayers(data);
-        if (layers != null) {
-            //layers.generateDotFile();
-            AVLNode node = layers.search("5");
-            if (node != null) {
-                SparseMatrix matrix = (SparseMatrix) node.getObject();
-                matrix.generateDotFile();
-            } else {
-                System.out.println("null");
-            }
-        }
+//        if (layers != null) {
+//            //layers.generateDotFile();
+//            AVLNode node = layers.search("5");
+//            if (node != null) {
+//                SparseMatrix matrix = (SparseMatrix) node.getObject();
+//                matrix.generateDotFile();
+//            } else {
+//                System.out.println("null");
+//            }
+//        }
 
         String images = control.readData("/home/cesar31/Java/ImageGenerator/datos/imagenes.im");
         //System.out.println(images);
         CircularList list = controller.readImages(images);
         if (list != null) {
-            list.generateDotFile();
-            ListNode node = list.search(2);
-            if (node != null) {
-                if (node.getObject() != null) {
-                    Image img = (Image) node.getObject();
-                    //System.out.println("Image: " + img.getId());
-                    img.getLayers().generateDotFile();
-                    
-                    //AVLNode avlNode = (AVLNode) img.getLayers().getNode(5).getObject();
-                }
-            } else {
-                System.out.println("Node null");
-            }
+//            list.generateDotFile();
+//            ListNode node = list.search(2);
+//            if (node != null) {
+//                if (node.getObject() != null) {
+//                    Image img = (Image) node.getObject();
+//                    //System.out.println("Image: " + img.getId());
+//                    img.getLayers().generateDotFile();
+//                    System.out.println("Image: " + img.getId());
+//                    ObjectList img_list = img.getLayers();
+//                    AVLNode n = (AVLNode) img_list.getNode(3).getObject();
+//                    System.out.println("AVL: " + n.getId());
+//                    SparseMatrix m = (SparseMatrix) n.getObject();
+//                    m.generateDotFile();
+//                }
+//            } else {
+//                System.out.println("Node null");
+//            }
         }
-        
+
         String usrs = control.readData("/home/cesar31/Java/ImageGenerator/datos/usuarios.usr");
         System.out.println(usrs);
         AVLTree users = controller.readUsers(usrs);
-        if(users != null) {
+        if (users != null) {
             System.out.println("Usuarios: " + users.getSize());
-            users.generateDotFile();
+            //users.generateDotFile();
+
+            /* Obtener usuario */
+            AVLNode node = users.search("cesar2");
+            System.out.println("Usuario: " + node.getId());
+            User u = (User) node.getObject();
+            ObjectList img_u = u.getImages();
+            //img_u.generateDotFile();
+
+            ListNode n = img_u.getNode(1);
+            System.out.println("n: " + n.getId());
+            ListNode m = (ListNode) n.getObject();
+            System.out.println("m: " + m.getId());
+            Image i = (Image) m.getObject();
+            i.getLayers().generateDotFile();
         }
     }
 
