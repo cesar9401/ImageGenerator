@@ -24,11 +24,16 @@ public class MainController {
 
     private MainFrame frame;
 
+    private int limit;
+    private int count;
+
     public MainController(MainFrame frame) {
         this.frame = frame;
         this.parser = new ParserController();
         this.control = new ControlFile();
 
+        this.limit = 0;
+        this.count = 0;
         /* Borrar */
         loadDatos();
         //generateImg();
@@ -242,12 +247,22 @@ public class MainController {
         }
     }
 
+    /**
+     * Generar imagen por recorrido
+     *
+     * @param number
+     * @param type
+     */
     public void generateImgByTour(String number, String type) {
         if (this.layersTree != null) {
             layersTree.generateDotFile();
             int size = getSize(number);
-            System.out.println("size = " + size);
             if (size > 0 && size <= layersTree.getSize()) {
+
+                /* establecer limite y contador */
+                this.limit = size;
+                this.count = 0;
+
                 switch (type) {
                     case "InOrden":
                         generateImgInOrden();
@@ -269,71 +284,107 @@ public class MainController {
         SparseMatrix matrix = new SparseMatrix();
         inOrden(layersTree.getRoot(), matrix);
         matrix.generateDotFile();
+        System.out.println("Size: " + matrix.getSize());
+        tour(matrix);
     }
-    
+
     private void generateImgPreOrden() {
         SparseMatrix matrix = new SparseMatrix();
         preOrden(layersTree.getRoot(), matrix);
         matrix.generateDotFile();
+        tour(matrix);
     }
-    
+
     private void generateImgPostOrden() {
         SparseMatrix matrix = new SparseMatrix();
         postOrden(layersTree.getRoot(), matrix);
         matrix.generateDotFile();
+        tour(matrix);
     }
 
     private void inOrden(AVLNode node, SparseMatrix matrix) {
         if (node != null) {
             inOrden(node.getLeft(), matrix);
-            
+
             createMatrix(node, matrix);
-            
+
             inOrden(node.getRight(), matrix);
         }
     }
-    
+
     private void preOrden(AVLNode node, SparseMatrix matrix) {
-        if(node != null) {
+        if (node != null) {
             createMatrix(node, matrix);
-            
+
             preOrden(node.getLeft(), matrix);
-            
+
             preOrden(node.getRight(), matrix);
         }
     }
-    
+
     private void postOrden(AVLNode node, SparseMatrix matrix) {
-        if(node != null) {
+        if (node != null) {
             postOrden(node.getLeft(), matrix);
-        
+
             postOrden(node.getRight(), matrix);
-        
+
             createMatrix(node, matrix);
         }
     }
 
+    /**
+     * crear matriz para generar imagen
+     *
+     * @param node
+     * @param matrix
+     */
     private void createMatrix(AVLNode node, SparseMatrix matrix) {
-        SparseMatrix m = (SparseMatrix) node.getObject();
-        System.out.println("matriz: " + m.getId());
-        MatrixNode aux = m.getRoot().getDown();
+        if (this.count < this.limit) {
+            SparseMatrix m = (SparseMatrix) node.getObject();
+            System.out.println("matriz: " + m.getId());
+
+            MatrixNode aux = m.getRoot().getDown();
+            while (aux != null) {
+                MatrixNode aux1 = aux.getRight();
+                while (aux1 != null) {
+                    MatrixNode tmp = matrix.searchNode(aux1.getY(), aux1.getX());
+                    if (tmp != null) {
+                        System.out.println("Busqueda: " + tmp.toString());
+                        tmp.setColor(aux1.getColor());
+                        //System.out.println(tmp.toString());
+                    } else {
+                        //System.out.println(aux1.toString());
+                        System.out.println("Insertando: " + aux1.toString());
+                        matrix.insert(aux1.getX(), aux1.getY(), aux1.getColor());
+                    }
+
+                    aux1 = aux1.getRight();
+                }
+                aux = aux.getDown();
+            }
+
+            count++;
+        }
+    }
+
+    public void tour(SparseMatrix matrix) {
+        MatrixNode aux = matrix.getRoot().getDown();
         while (aux != null) {
             MatrixNode aux1 = aux.getRight();
             while (aux1 != null) {
-                MatrixNode tmp = matrix.searchNode(aux1.getY(), aux1.getX());
-                if (tmp != null) {
-                    tmp.setColor(aux1.getColor());
-                    //System.out.println(tmp.toString());
-                } else {
-                    //System.out.println(aux1.toString());
-                    matrix.insert(aux1.getX(), aux1.getY(), aux1.getColor());
-                }
+                System.out.println(aux1.toString());
                 aux1 = aux1.getRight();
             }
             aux = aux.getDown();
         }
     }
 
+    /**
+     * Parsear entero
+     *
+     * @param number
+     * @return
+     */
     private int getSize(String number) {
         try {
             return Integer.valueOf(number);
