@@ -17,6 +17,10 @@ public class SparseMatrix {
     private final String MATRIX_P = "matrix.png";
     private final String COMMAND = "dot -Tpng " + MATRIX_D + " -o " + MATRIX_P;
 
+    private final String IMG_D = "img.dot";
+    private final String IMG_P = "img.png";
+    private final String IMG_COMMAND = "dot -Tpng " + IMG_D + " -o " + IMG_P;
+
     private MatrixNode root;
     private int rows;
     private int columns;
@@ -53,22 +57,19 @@ public class SparseMatrix {
      * @param node
      */
     public void insert(MatrixNode node) {
-        System.out.println(node.toString());
+        //System.out.println(node.toString());
         int x = node.getX();
         int y = node.getY();
 
         MatrixNode rowHead = getRow(y, true);
-        System.out.println("rowHead = " + rowHead.toString());
         MatrixNode columnHead = getColumn(x, true);
-        System.out.println("columnHead = " + columnHead.toString());
-        
+
         /* Insertar en columna */
         MatrixNode col = rowHead.getRight();
         if (col == null) {
             rowHead.setRight(node);
             node.setLetf(rowHead);
         } else {
-            System.out.println("col = " + col.toString());
             if (col.getX() > x) {
                 /* Punteros para node */
                 node.setRight(col);
@@ -100,7 +101,7 @@ public class SparseMatrix {
                     node.setLetf(aux);
                 }
             } else if (col.getX() == x) {
-                System.out.println("Ya insertado x : " + node.toString());
+                //System.out.println("Ya insertado x : " + node.toString());
             }
         }
 
@@ -140,7 +141,7 @@ public class SparseMatrix {
                     node.setUp(aux);
                 }
             } else if (row.getY() == y) {
-                System.out.println("Ya insertado y : " + node.toString());
+                //System.out.println("Ya insertado y : " + node.toString());
             }
         }
     }
@@ -153,7 +154,6 @@ public class SparseMatrix {
      * @return
      */
     public MatrixNode searchNode(int row, int column) {
-        System.out.println("Buscando: x: " + column + " y: " + row);
         MatrixNode rowHead = getRow(row, false);
         if (rowHead != null) {
             MatrixNode tmp = rowHead.getRight();
@@ -162,12 +162,11 @@ public class SparseMatrix {
                     //System.out.println("busqueda: " + tmp.toString());
                     return tmp;
                 } else {
-                    System.out.println("aux no match: " + tmp.toString());
+                    //System.out.println("aux no match: " + tmp.toString());
                 }
                 tmp = tmp.getRight();
             }
         }
-        System.out.println("return null");
         return null;
     }
 
@@ -181,7 +180,6 @@ public class SparseMatrix {
         MatrixNode aux = root.getDown();
         while (aux != null) {
             if (aux.getY() == rowNumber) {
-                System.out.println("return: " + aux.toString());
                 return aux;
             }
             aux = aux.getDown();
@@ -322,6 +320,49 @@ public class SparseMatrix {
         }
     }
 
+    /**
+     * Generar imagen
+     */
+    public void generateImgDotFile() {
+        ControlFile write = new ControlFile();
+
+        String content = getImgDotString();
+        write.writeDotFile(IMG_D, content);
+        try {
+            write.execComand(IMG_COMMAND);
+        } catch (IOException ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    /**
+     * String para generar imagen
+     *
+     * @return
+     */
+    private String getImgDotString() {
+        String graph = "digraph img{\n\n";
+        graph += "node [ shape = box ];\n\n";
+        graph += "a0[ label = <\n";
+        graph += "<TABLE border=\"0\" cellspacing=\"0\" cellpadding=\"20\">";
+
+        for (int i = 1; i <= this.getSize(); i++) {
+            graph += "<TR>\n";
+            for (int j = 1; j <= this.getSize(); j++) {
+                MatrixNode aux = this.searchNode(i, j);
+                graph += (aux != null) ? "<TD bgcolor=\"" + aux.getColor() + "\"></TD>\n" : "<TD bgcolor=\"#FFFFFF\"></TD>\n";
+            }
+            graph += "</TR>\n\n";
+        }
+
+        graph += "</TABLE>>];\n\n";
+        graph += "}\n";
+        return graph;
+    }
+
+    /**
+     * Generar .dot y .png de matriz dispersa
+     */
     public void generateDotFile() {
         ControlFile write = new ControlFile();
 
@@ -335,6 +376,11 @@ public class SparseMatrix {
 
     }
 
+    /**
+     * String para generar img de matriz dispersa
+     *
+     * @return
+     */
     public String getDotString() {
         String graph = "digraph graph_name {\n\n";
         graph += "\tnode [shape = box style = filled ];\n\n";
@@ -486,33 +532,6 @@ public class SparseMatrix {
         }
 
         return Math.max(row, col);
-    }
-
-    public void viewRows() {
-        MatrixNode aux = root.getDown();
-        System.out.println("Rows");
-        System.out.println("0");
-        if (aux != null) {
-            System.out.println(aux.getY());
-            while (aux.getDown() != null) {
-                aux = aux.getDown();
-                System.out.println(aux.getY());
-            }
-        }
-    }
-
-    public void viewColumns() {
-        MatrixNode aux = root.getRight();
-        System.out.println("Columns");
-        System.out.print("0 ");
-        if (aux != null) {
-            System.out.print(aux.getX() + " ");
-            while (aux.getRight() != null) {
-                aux = aux.getRight();
-                System.out.print(aux.getX() + " ");
-            }
-        }
-        System.out.println("");
     }
 
     public MatrixNode getRoot() {

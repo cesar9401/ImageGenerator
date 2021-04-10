@@ -1,5 +1,7 @@
 package com.cesar31.imggenerator.control;
 
+import com.cesar31.imggenerator.structures.MatrixNode;
+import com.cesar31.imggenerator.structures.SparseMatrix;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

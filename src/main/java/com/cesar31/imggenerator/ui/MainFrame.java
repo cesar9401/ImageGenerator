@@ -42,6 +42,9 @@ public class MainFrame extends javax.swing.JFrame {
         recorridoLabel = new javax.swing.JLabel();
         generateButton = new javax.swing.JButton();
         typeCombo = new javax.swing.JComboBox<>();
+        idLabel = new javax.swing.JLabel();
+        idText = new javax.swing.JTextField();
+        genIdButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         capasItem = new javax.swing.JMenuItem();
@@ -227,6 +230,28 @@ public class MainFrame extends javax.swing.JFrame {
         typeCombo.setForeground(new java.awt.Color(255, 255, 255));
         typeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "InOrden", "PreOrden", "PostOrden" }));
 
+        idLabel.setBackground(new java.awt.Color(40, 44, 52));
+        idLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        idLabel.setForeground(new java.awt.Color(255, 255, 255));
+        idLabel.setText("Buscar por id");
+
+        idText.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        idText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idTextActionPerformed(evt);
+            }
+        });
+
+        genIdButton.setBackground(new java.awt.Color(220, 118, 51));
+        genIdButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        genIdButton.setForeground(new java.awt.Color(0, 0, 0));
+        genIdButton.setText("Generar");
+        genIdButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genIdButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout imgPaneLayout = new javax.swing.GroupLayout(imgPane);
         imgPane.setLayout(imgPaneLayout);
         imgPaneLayout.setHorizontalGroup(
@@ -240,11 +265,16 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(53, 53, 53)
                         .addGroup(imgPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(recorridoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(imgPaneLayout.createSequentialGroup()
-                                .addComponent(layersText, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(imgPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(layersText, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(28, 28, 28)
-                                .addComponent(typeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(imgPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(genIdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(typeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(369, Short.MAX_VALUE))
         );
         imgPaneLayout.setVerticalGroup(
@@ -259,8 +289,14 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(typeCombo)
                     .addComponent(layersText, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                .addGap(494, 494, 494))
+                .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addComponent(idLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(imgPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idText, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(genIdButton, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+                .addGap(364, 364, 364))
         );
 
         tabbedPane.addTab("Imagenes", imgPane);
@@ -469,11 +505,19 @@ public class MainFrame extends javax.swing.JFrame {
         String input = layersText.getText();
         String type = typeCombo.getSelectedItem().toString();
         
-        System.out.println("input = " + input);
         System.out.println("type = " + type);
-        
         controller.generateImgByTour(input, type);
     }//GEN-LAST:event_generateButtonActionPerformed
+
+    private void idTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idTextActionPerformed
+
+    private void genIdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genIdButtonActionPerformed
+        // TODO add your handling code here:
+        String id = idText.getText();
+        controller.generateImgById(id);
+    }//GEN-LAST:event_genIdButtonActionPerformed
 
     public void showMessage(String message, String title, int type) {
         JOptionPane.showMessageDialog(this, message, title, type);
@@ -497,7 +541,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu fileMenu1;
+    private javax.swing.JButton genIdButton;
     private javax.swing.JButton generateButton;
+    private javax.swing.JLabel idLabel;
+    public javax.swing.JTextField idText;
     private javax.swing.JMenuItem imgItem;
     private javax.swing.JPanel imgPane;
     public javax.swing.JTextField layersText;

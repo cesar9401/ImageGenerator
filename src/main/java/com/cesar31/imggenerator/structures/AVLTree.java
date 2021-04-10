@@ -330,18 +330,6 @@ public class AVLTree {
         return aux;
     }
 
-    private void preOrden(AVLNode node) {
-        if (node != null) {
-            System.out.print(node.getId() + " ");
-            preOrden(node.getLeft());
-            preOrden(node.getRight());
-        }
-    }
-
-    public void preOrden() {
-        preOrden(this.root);
-    }
-
     private void getSize(AVLNode node) {
         if (node != null) {
             this.size++;

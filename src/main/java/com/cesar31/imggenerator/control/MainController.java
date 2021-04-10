@@ -1,10 +1,13 @@
 package com.cesar31.imggenerator.control;
 
+import com.cesar31.imggenerator.model.Image;
 import com.cesar31.imggenerator.model.User;
 import com.cesar31.imggenerator.structures.AVLNode;
 import com.cesar31.imggenerator.structures.AVLTree;
 import com.cesar31.imggenerator.structures.CircularList;
+import com.cesar31.imggenerator.structures.ListNode;
 import com.cesar31.imggenerator.structures.MatrixNode;
+import com.cesar31.imggenerator.structures.ObjectList;
 import com.cesar31.imggenerator.structures.SparseMatrix;
 import com.cesar31.imggenerator.ui.MainFrame;
 import javax.swing.JOptionPane;
@@ -247,6 +250,35 @@ public class MainController {
         }
     }
 
+    public void generateImgById(String str) {
+        if (this.layersTree != null) {
+            int id = getNumber(str);
+            if (id > 0) {
+                ListNode node = imgList.search(id);
+                if (node != null) {
+                    SparseMatrix matrix = new SparseMatrix();
+
+                    Image im = (Image) node.getObject();
+                    ObjectList layers = im.getLayers();
+                    ListNode aux = layers.getRoot();
+                    while (aux != null) {
+                        AVLNode avl = (AVLNode) aux.getObject();
+                        SparseMatrix m = (SparseMatrix) avl.getObject();
+                        System.out.println("m: " + m.getId());
+                        createMatrix(m, matrix);
+                        aux = aux.getNext();
+                    }
+
+                    matrix.generateImgDotFile();
+                } else {
+                    this.frame.showMessage("El id ingresado no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                this.frame.showMessage("El valor ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     /**
      * Generar imagen por recorrido
      *
@@ -255,8 +287,8 @@ public class MainController {
      */
     public void generateImgByTour(String number, String type) {
         if (this.layersTree != null) {
-            layersTree.generateDotFile();
-            int size = getSize(number);
+            //layersTree.generateDotFile();
+            int size = getNumber(number);
             if (size > 0 && size <= layersTree.getSize()) {
 
                 /* establecer limite y contador */
@@ -283,23 +315,19 @@ public class MainController {
     private void generateImgInOrden() {
         SparseMatrix matrix = new SparseMatrix();
         inOrden(layersTree.getRoot(), matrix);
-        matrix.generateDotFile();
-        System.out.println("Size: " + matrix.getSize());
-        tour(matrix);
+        matrix.generateImgDotFile();
     }
 
     private void generateImgPreOrden() {
         SparseMatrix matrix = new SparseMatrix();
         preOrden(layersTree.getRoot(), matrix);
-        matrix.generateDotFile();
-        tour(matrix);
+        matrix.generateImgDotFile();
     }
 
     private void generateImgPostOrden() {
         SparseMatrix matrix = new SparseMatrix();
         postOrden(layersTree.getRoot(), matrix);
-        matrix.generateDotFile();
-        tour(matrix);
+        matrix.generateImgDotFile();
     }
 
     private void inOrden(AVLNode node, SparseMatrix matrix) {
@@ -342,28 +370,34 @@ public class MainController {
         if (this.count < this.limit) {
             SparseMatrix m = (SparseMatrix) node.getObject();
             System.out.println("matriz: " + m.getId());
-
-            MatrixNode aux = m.getRoot().getDown();
-            while (aux != null) {
-                MatrixNode aux1 = aux.getRight();
-                while (aux1 != null) {
-                    MatrixNode tmp = matrix.searchNode(aux1.getY(), aux1.getX());
-                    if (tmp != null) {
-                        System.out.println("Busqueda: " + tmp.toString());
-                        tmp.setColor(aux1.getColor());
-                        //System.out.println(tmp.toString());
-                    } else {
-                        //System.out.println(aux1.toString());
-                        System.out.println("Insertando: " + aux1.toString());
-                        matrix.insert(aux1.getX(), aux1.getY(), aux1.getColor());
-                    }
-
-                    aux1 = aux1.getRight();
-                }
-                aux = aux.getDown();
-            }
-
+            createMatrix(m, matrix);
             count++;
+        }
+    }
+
+    /**
+     * Crear matriz a partir de otras matrices
+     *
+     * @param m
+     * @param matrix
+     */
+    private void createMatrix(SparseMatrix m, SparseMatrix matrix) {
+        MatrixNode aux = m.getRoot().getDown();
+        while (aux != null) {
+            MatrixNode aux1 = aux.getRight();
+            while (aux1 != null) {
+                MatrixNode tmp = matrix.searchNode(aux1.getY(), aux1.getX());
+                if (tmp != null) {
+                    tmp.setColor(aux1.getColor());
+                    //System.out.println(tmp.toString());
+                } else {
+                    //System.out.println(aux1.toString());
+                    matrix.insert(aux1.getX(), aux1.getY(), aux1.getColor());
+                }
+
+                aux1 = aux1.getRight();
+            }
+            aux = aux.getDown();
         }
     }
 
@@ -385,7 +419,7 @@ public class MainController {
      * @param number
      * @return
      */
-    private int getSize(String number) {
+    private int getNumber(String number) {
         try {
             return Integer.valueOf(number);
         } catch (NumberFormatException e) {
