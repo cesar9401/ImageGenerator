@@ -36,9 +36,9 @@ public class MainController {
 
         this.limit = 0;
         this.count = 0;
-        
+
         /* Borrar */
-        loadDatos();
+        //loadDatos();
     }
 
     /* Borrar */
@@ -163,7 +163,6 @@ public class MainController {
      * Agregar usuarios
      *
      * @param id
-     * @return
      */
     public void addUser(String id) {
         if (this.usersTree != null) {
@@ -218,7 +217,7 @@ public class MainController {
                     this.usersTree.delete(id);
                     if (this.usersTree.deleted()) {
                         this.frame.showMessage("El usuario: " + id + ", ha sido eliminado", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-                        this.usersTree.generateDotFile();
+                        //this.usersTree.generateDotFile();
                     } else {
                         this.frame.showMessage("El usuario: " + id + ", no existe", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -245,9 +244,8 @@ public class MainController {
                             this.usersTree.delete(u.getId());
                             u.setId(id);
                             this.usersTree.insert(id, u);
-                            this.usersTree.generateDotFile();
+                            //this.usersTree.generateDotFile();
                             this.frame.showMessage("El usuario: " + id + ", ha sido editado", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-
                             this.frame.disableButtons();
                         } else {
                             this.frame.showMessage("El usuario: " + id + ", ya existe", "Error", JOptionPane.ERROR_MESSAGE);
@@ -255,6 +253,66 @@ public class MainController {
 
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Agregar imagen a usuario
+     *
+     * @param user
+     * @param imgId
+     */
+    public void addImg(User user, String imgId) {
+        if (this.layersTree != null) {
+            int id = getNumber(imgId);
+            if (id > 0) {
+                ListNode nodeImg = imgList.search(id);
+                if (nodeImg != null) {
+                    user.getImages().insertar(id, nodeImg);
+
+                    /* Generar archivo dot y png */
+                    user.getImages().generateDotFile();
+                    if (user.getImages().inserted()) {
+                        this.frame.showMessage("Se ha agregado la imagen: " + id + ", al usuario: " + user.getId(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        this.frame.showMessage("El usuario: " + user.getId() + ", ya contiene entre sus imagenes a la imagen: " + id + ", no es posible volverla a agregar", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    this.frame.showMessage("La imagen que busca, no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                this.frame.showMessage("El id ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Eliminar imagen en listado de usuario y listado circular
+     *
+     * @param user
+     * @param imgId
+     */
+    public void delImg(User user, String imgId) {
+        if (this.layersTree != null) {
+            int id = getNumber(imgId);
+            if (id > 0) {
+                ListNode node = user.getImages().getNode(id);
+                if (node != null) {
+                    user.getImages().delete(id);
+                    imgList.delete(id);
+                    
+                    this.frame.showMessage("Se ha eliminado la imagen: " + id + " del sistema.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    /* Generar dot y png */
+                    imgList.generateDotFileWithLayers();
+                    user.getImages().generateDotFile();
+
+                } else {
+                    this.frame.showMessage("El usuario: " + user.getId() + ", no es propietario de la imagen: " + id + ". No es posible eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                this.frame.showMessage("El id ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

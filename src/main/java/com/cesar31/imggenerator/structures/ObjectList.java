@@ -54,7 +54,11 @@ public class ObjectList {
                 aux = aux.getNext();
             }
             if (this.inserted) {
-                aux.setNext(node);
+                if (aux.getId() != node.getId()) {
+                    aux.setNext(node);
+                } else {
+                    this.inserted = false;
+                }
             }
         }
     }

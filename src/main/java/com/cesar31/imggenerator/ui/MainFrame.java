@@ -769,6 +769,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (this.user != null) {
             String id = editText.getText();
             this.controller.editUser(id, user);
+            this.user = null;
         }
     }//GEN-LAST:event_editButtonActionPerformed
 
@@ -819,7 +820,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void searchUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchUsrButtonActionPerformed
         // TODO add your handling code here:
-        imgCombo.removeAll();
+        imgCombo.removeAllItems();
 
         String id = usrText.getText();
         User usr = controller.getUser(id);
@@ -865,10 +866,20 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void addImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImgButtonActionPerformed
         // TODO add your handling code here:
+        if(this.user != null) {
+            String imgId = addDelText.getText();
+            controller.addImg(user, imgId);
+            addDelText.setText("");
+        }
     }//GEN-LAST:event_addImgButtonActionPerformed
 
     private void delImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delImgButtonActionPerformed
         // TODO add your handling code here:
+        if(this.user != null) {
+            String imgId = addDelText.getText();
+            controller.delImg(user, imgId);
+            addDelText.setText("");
+        }
     }//GEN-LAST:event_delImgButtonActionPerformed
 
     public void showMessage(String message, String title, int type) {

@@ -102,7 +102,7 @@ public class ParserController {
     public MatrixNode getMatrixNode(List<Integer> cells, String color) {
         MatrixNode node = null;
         if (cells.size() == 2) {
-            node = new MatrixNode(cells.get(1), cells.get(0), color);
+            node = new MatrixNode(cells.get(1), cells.get(0), String.valueOf(color).toUpperCase());
             //System.out.println(node.toString());
         }
 

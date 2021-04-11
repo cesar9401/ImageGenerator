@@ -355,6 +355,10 @@ public class SparseMatrix {
             graph += "</TR>\n\n";
         }
 
+        if(this.getSize() == 0) {
+            graph += "<TR><TD bgcolor=\"#000000\"></TD></TR>";
+        }
+        
         graph += "</TABLE>>];\n\n";
         graph += "}\n";
         return graph;

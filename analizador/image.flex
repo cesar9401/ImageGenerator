@@ -36,7 +36,7 @@ WhiteSpace = {LineTerminator}|[ \t\f]
 
 UserName = \w+
 
-HexColor = #?([0-9a-fA-F]{3,3}|[0-9a-fA-F]{6,6})
+HexColor = #[0-9a-fA-F]{6,6}
 
 %%
 
