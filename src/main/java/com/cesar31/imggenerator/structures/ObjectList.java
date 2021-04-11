@@ -14,8 +14,10 @@ public class ObjectList {
     private final String LIST_D = "list.dot";
     private final String LIST_P = "list.png";
     private final String COMMAND = "dot -Tpng " + LIST_D + " -o " + LIST_P;
+    private boolean inserted;
 
     public ObjectList() {
+        this.inserted = false;
     }
 
     /**
@@ -35,14 +37,25 @@ public class ObjectList {
      * @param node
      */
     private void insertar(ListNode node) {
+        this.inserted = false;
+
         if (this.root == null) {
             this.root = node;
+            this.inserted = true;
         } else {
             ListNode aux = root;
+            this.inserted = true;
             while (aux.getNext() != null) {
+                if (aux.getId() == node.getId()) {
+                    /* no insertar */
+                    this.inserted = false;
+                    break;
+                }
                 aux = aux.getNext();
             }
-            aux.setNext(node);
+            if (this.inserted) {
+                aux.setNext(node);
+            }
         }
     }
 
@@ -135,5 +148,9 @@ public class ObjectList {
 
     public ListNode getRoot() {
         return root;
+    }
+
+    public boolean inserted() {
+        return inserted;
     }
 }

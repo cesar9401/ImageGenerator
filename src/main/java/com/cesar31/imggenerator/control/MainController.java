@@ -30,13 +30,13 @@ public class MainController {
     private int limit;
     private int count;
 
-    public MainController(MainFrame frame) {
-        this.frame = frame;
+    public MainController() {
         this.parser = new ParserController();
         this.control = new ControlFile();
 
         this.limit = 0;
         this.count = 0;
+        
         /* Borrar */
         loadDatos();
     }
@@ -47,6 +47,17 @@ public class MainController {
         readImages("/home/cesar31/Java/ImageGenerator/datos/imagenes.im");
         readUsers("/home/cesar31/Java/ImageGenerator/datos/usuarios.usr");
         System.out.println("Datos cargados");
+    }
+
+    /**
+     * Mostrar ventana
+     */
+    public void initView() {
+        java.awt.EventQueue.invokeLater(() -> {
+            frame = new MainFrame(this);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
     }
 
     /**
@@ -138,7 +149,7 @@ public class MainController {
                 if (node != null) {
                     Image img = (Image) node.getObject();
                     layersTree.generateDotWithImgFile(img);
-                    
+
                 } else {
                     this.frame.showMessage("El id ingresado no existe", "Error", JOptionPane.ERROR_MESSAGE);
                 }

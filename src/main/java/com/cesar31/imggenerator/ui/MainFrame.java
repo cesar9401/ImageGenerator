@@ -17,9 +17,9 @@ public class MainFrame extends javax.swing.JFrame {
     private MainController controller;
     private User user;
 
-    public MainFrame() {
+    public MainFrame(MainController controller) {
         initComponents();
-        controller = new MainController(this);
+        this.controller = controller;
     }
 
     @SuppressWarnings("unchecked")
@@ -28,16 +28,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel = new javax.swing.JPanel();
         tabbedPane = new javax.swing.JTabbedPane();
-        userPane = new javax.swing.JPanel();
-        addLabel = new javax.swing.JLabel();
-        addText = new javax.swing.JTextField();
-        addButton = new javax.swing.JButton();
-        searchLabel = new javax.swing.JLabel();
-        editText = new javax.swing.JTextField();
-        searchButton = new javax.swing.JButton();
-        delButton = new javax.swing.JButton();
-        userLabel = new javax.swing.JLabel();
-        editButton = new javax.swing.JButton();
         imgPane = new javax.swing.JPanel();
         layersText = new javax.swing.JTextField();
         titleLabel = new javax.swing.JLabel();
@@ -55,6 +45,20 @@ public class MainFrame extends javax.swing.JFrame {
         imgCombo = new javax.swing.JComboBox<>();
         usrImgButton = new javax.swing.JButton();
         searchUsrButton = new javax.swing.JButton();
+        crudPane = new javax.swing.JPanel();
+        addLabel = new javax.swing.JLabel();
+        addText = new javax.swing.JTextField();
+        addButton = new javax.swing.JButton();
+        searchLabel = new javax.swing.JLabel();
+        editText = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        delButton = new javax.swing.JButton();
+        userLabel = new javax.swing.JLabel();
+        editButton = new javax.swing.JButton();
+        addDelText = new javax.swing.JTextField();
+        addDelLabel = new javax.swing.JLabel();
+        addImgButton = new javax.swing.JButton();
+        delImgButton = new javax.swing.JButton();
         memoryPane = new javax.swing.JPanel();
         genRepButton = new javax.swing.JButton();
         reportCombo = new javax.swing.JComboBox<>();
@@ -89,131 +93,6 @@ public class MainFrame extends javax.swing.JFrame {
         tabbedPane.setForeground(new java.awt.Color(255, 255, 255));
         tabbedPane.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         tabbedPane.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-
-        userPane.setBackground(new java.awt.Color(40, 44, 52));
-        userPane.setForeground(new java.awt.Color(255, 255, 255));
-
-        addLabel.setBackground(new java.awt.Color(40, 44, 52));
-        addLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        addLabel.setForeground(new java.awt.Color(255, 255, 255));
-        addLabel.setText("Agregar Usuario");
-
-        addText.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        addText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addTextActionPerformed(evt);
-            }
-        });
-
-        addButton.setBackground(new java.awt.Color(220, 118, 51));
-        addButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        addButton.setForeground(new java.awt.Color(0, 0, 0));
-        addButton.setText("Agregar");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
-            }
-        });
-
-        searchLabel.setBackground(new java.awt.Color(40, 44, 52));
-        searchLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        searchLabel.setForeground(new java.awt.Color(255, 255, 255));
-        searchLabel.setText("Buscar Usuario");
-
-        editText.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        editText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editTextActionPerformed(evt);
-            }
-        });
-
-        searchButton.setBackground(new java.awt.Color(220, 118, 51));
-        searchButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        searchButton.setForeground(new java.awt.Color(0, 0, 0));
-        searchButton.setText("Buscar");
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
-
-        delButton.setBackground(new java.awt.Color(220, 118, 51));
-        delButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        delButton.setForeground(new java.awt.Color(0, 0, 0));
-        delButton.setText("Eliminar");
-        delButton.setEnabled(false);
-        delButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                delButtonActionPerformed(evt);
-            }
-        });
-
-        userLabel.setBackground(new java.awt.Color(40, 44, 52));
-        userLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        userLabel.setForeground(new java.awt.Color(255, 255, 255));
-        userLabel.setText("Usuario:");
-
-        editButton.setBackground(new java.awt.Color(220, 118, 51));
-        editButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        editButton.setForeground(new java.awt.Color(0, 0, 0));
-        editButton.setText("Editar");
-        editButton.setEnabled(false);
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout userPaneLayout = new javax.swing.GroupLayout(userPane);
-        userPane.setLayout(userPaneLayout);
-        userPaneLayout.setHorizontalGroup(
-            userPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userPaneLayout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addGroup(userPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addLabel)
-                    .addGroup(userPaneLayout.createSequentialGroup()
-                        .addComponent(addText, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(userPaneLayout.createSequentialGroup()
-                        .addComponent(delButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(userPaneLayout.createSequentialGroup()
-                        .addGroup(userPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(userLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(editText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(410, Short.MAX_VALUE))
-        );
-        userPaneLayout.setVerticalGroup(
-            userPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userPaneLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(addLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(userPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                .addGap(81, 81, 81)
-                .addComponent(searchLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(userPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(userLabel)
-                .addGap(18, 18, 18)
-                .addGroup(userPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(delButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                .addGap(290, 290, 290))
-        );
-
-        tabbedPane.addTab("Usuarios", userPane);
 
         imgPane.setBackground(new java.awt.Color(40, 44, 52));
         imgPane.setForeground(new java.awt.Color(255, 255, 255));
@@ -404,6 +283,181 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         tabbedPane.addTab("Imagenes", imgPane);
+
+        crudPane.setBackground(new java.awt.Color(40, 44, 52));
+        crudPane.setForeground(new java.awt.Color(255, 255, 255));
+
+        addLabel.setBackground(new java.awt.Color(40, 44, 52));
+        addLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        addLabel.setForeground(new java.awt.Color(255, 255, 255));
+        addLabel.setText("Agregar Usuario");
+
+        addText.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        addText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTextActionPerformed(evt);
+            }
+        });
+
+        addButton.setBackground(new java.awt.Color(220, 118, 51));
+        addButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        addButton.setForeground(new java.awt.Color(0, 0, 0));
+        addButton.setText("Agregar");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        searchLabel.setBackground(new java.awt.Color(40, 44, 52));
+        searchLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        searchLabel.setForeground(new java.awt.Color(255, 255, 255));
+        searchLabel.setText("Buscar Usuario");
+
+        editText.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        editText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTextActionPerformed(evt);
+            }
+        });
+
+        searchButton.setBackground(new java.awt.Color(220, 118, 51));
+        searchButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        searchButton.setForeground(new java.awt.Color(0, 0, 0));
+        searchButton.setText("Buscar");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
+
+        delButton.setBackground(new java.awt.Color(220, 118, 51));
+        delButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        delButton.setForeground(new java.awt.Color(0, 0, 0));
+        delButton.setText("Eliminar");
+        delButton.setEnabled(false);
+        delButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delButtonActionPerformed(evt);
+            }
+        });
+
+        userLabel.setBackground(new java.awt.Color(40, 44, 52));
+        userLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        userLabel.setForeground(new java.awt.Color(255, 255, 255));
+        userLabel.setText("Usuario:");
+
+        editButton.setBackground(new java.awt.Color(220, 118, 51));
+        editButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        editButton.setForeground(new java.awt.Color(0, 0, 0));
+        editButton.setText("Editar");
+        editButton.setEnabled(false);
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
+
+        addDelText.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        addDelText.setEnabled(false);
+        addDelText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDelTextActionPerformed(evt);
+            }
+        });
+
+        addDelLabel.setBackground(new java.awt.Color(40, 44, 52));
+        addDelLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        addDelLabel.setForeground(new java.awt.Color(255, 255, 255));
+        addDelLabel.setText("Agregar/Eliminar imagen");
+        addDelLabel.setEnabled(false);
+
+        addImgButton.setBackground(new java.awt.Color(220, 118, 51));
+        addImgButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        addImgButton.setForeground(new java.awt.Color(0, 0, 0));
+        addImgButton.setText("Agregar");
+        addImgButton.setEnabled(false);
+        addImgButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addImgButtonActionPerformed(evt);
+            }
+        });
+
+        delImgButton.setBackground(new java.awt.Color(220, 118, 51));
+        delImgButton.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        delImgButton.setForeground(new java.awt.Color(0, 0, 0));
+        delImgButton.setText("Eliminar");
+        delImgButton.setEnabled(false);
+        delImgButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delImgButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout crudPaneLayout = new javax.swing.GroupLayout(crudPane);
+        crudPane.setLayout(crudPaneLayout);
+        crudPaneLayout.setHorizontalGroup(
+            crudPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(crudPaneLayout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addGroup(crudPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addDelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(crudPaneLayout.createSequentialGroup()
+                        .addComponent(editText, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addLabel)
+                    .addGroup(crudPaneLayout.createSequentialGroup()
+                        .addComponent(addText, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(crudPaneLayout.createSequentialGroup()
+                        .addComponent(delButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(crudPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(crudPaneLayout.createSequentialGroup()
+                            .addComponent(addImgButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(delImgButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(addDelText, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(410, Short.MAX_VALUE))
+        );
+        crudPaneLayout.setVerticalGroup(
+            crudPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(crudPaneLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(addLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(crudPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addComponent(searchLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(crudPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(userLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(crudPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(delButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addComponent(addDelLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(addDelText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(crudPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addImgButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(delImgButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                .addGap(119, 119, 119))
+        );
+
+        tabbedPane.addTab("CRUD", crudPane);
 
         memoryPane.setBackground(new java.awt.Color(40, 44, 52));
         memoryPane.setForeground(new java.awt.Color(255, 255, 255));
@@ -691,8 +745,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.user = controller.getUser(input);
         if (user != null) {
             userLabel.setText("Usuario: " + user.getId());
-            delButton.setEnabled(true);
-            editButton.setEnabled(true);
+            enableButtons();
         } else {
             showMessage("No se encontro al usuario: " + input, "Error", JOptionPane.ERROR_MESSAGE);
             disableButtons();
@@ -758,7 +811,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void usrImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usrImgButtonActionPerformed
         // TODO add your handling code here:
-        if(imgCombo.getItemCount() > 0) {
+        if (imgCombo.getItemCount() > 0) {
             String id = String.valueOf(imgCombo.getSelectedItem());
             controller.generateImgById(id);
         }
@@ -806,8 +859,31 @@ public class MainFrame extends javax.swing.JFrame {
         controller.generateImgWithAVL(imgId);
     }//GEN-LAST:event_genGrafButtonActionPerformed
 
+    private void addDelTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDelTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addDelTextActionPerformed
+
+    private void addImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImgButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addImgButtonActionPerformed
+
+    private void delImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delImgButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_delImgButtonActionPerformed
+
     public void showMessage(String message, String title, int type) {
         JOptionPane.showMessageDialog(this, message, title, type);
+    }
+
+    private void enableButtons() {
+        delButton.setEnabled(true);
+        editButton.setEnabled(true);
+
+        /* Para imagenes */
+        addDelLabel.setEnabled(true);
+        addDelText.setEnabled(true);
+        addImgButton.setEnabled(true);
+        delImgButton.setEnabled(true);
     }
 
     public void disableButtons() {
@@ -815,14 +891,25 @@ public class MainFrame extends javax.swing.JFrame {
         userLabel.setText("Usuario:");
         delButton.setEnabled(false);
         editButton.setEnabled(false);
+
+        /* Para imagenes */
+        addDelLabel.setEnabled(false);
+        addDelText.setEnabled(false);
+        addImgButton.setEnabled(false);
+        delImgButton.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JLabel addDelLabel;
+    public javax.swing.JTextField addDelText;
+    private javax.swing.JButton addImgButton;
     private javax.swing.JLabel addLabel;
     public javax.swing.JTextField addText;
     private javax.swing.JMenuItem capasItem;
+    private javax.swing.JPanel crudPane;
     private javax.swing.JButton delButton;
+    private javax.swing.JButton delImgButton;
     private javax.swing.JButton editButton;
     public javax.swing.JTextField editText;
     private javax.swing.JMenuItem exitItem;
@@ -859,7 +946,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel titleLabel;
     private javax.swing.JComboBox<String> typeCombo;
     private javax.swing.JLabel userLabel;
-    private javax.swing.JPanel userPane;
     private javax.swing.JButton usrImgButton;
     private javax.swing.JLabel usrLabel;
     public javax.swing.JTextField usrText;
