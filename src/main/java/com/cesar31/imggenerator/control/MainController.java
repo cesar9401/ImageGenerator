@@ -39,60 +39,6 @@ public class MainController {
         this.count = 0;
         /* Borrar */
         loadDatos();
-        //generateImg();
-    }
-
-    public void generateImg() {
-        System.out.println("Generando");
-        AVLNode node1 = layersTree.search("3");
-        System.out.println("node1 = " + node1.getId());
-        SparseMatrix m1 = (SparseMatrix) node1.getObject();
-
-        AVLNode node2 = layersTree.search("4");
-        System.out.println("node2 = " + node2.getId());
-        SparseMatrix m2 = (SparseMatrix) node2.getObject();
-        System.out.println("m2 = " + m2.getId());
-        SparseMatrix matrix = new SparseMatrix();
-
-        MatrixNode aux = m1.getRoot().getDown();
-        System.out.println("matriz1");
-        while (aux != null) {
-            MatrixNode aux1 = aux.getRight();
-            while (aux1 != null) {
-                MatrixNode node = matrix.searchNode(aux1.getY(), aux1.getX());
-                if (node != null) {
-                    node.setColor(aux1.getColor());
-                    System.out.println(node.toString());
-                } else {
-                    System.out.println(aux1.toString());
-                    matrix.insert(aux1.getX(), aux1.getY(), aux1.getColor());
-                }
-
-                aux1 = aux1.getRight();
-            }
-            aux = aux.getDown();
-        }
-
-        aux = m2.getRoot().getDown();
-        System.out.println("\nmatriz2\n");
-        while (aux != null) {
-            MatrixNode aux1 = aux.getRight();
-            while (aux1 != null) {
-                MatrixNode node = matrix.searchNode(aux1.getY(), aux1.getX());
-                if (node != null) {
-                    node.setColor(aux1.getColor());
-                    System.out.println(node.toString());
-                } else {
-                    System.out.println(aux1.toString());
-                    matrix.insert(aux1.getX(), aux1.getY(), aux1.getColor());
-                }
-                aux1 = aux1.getRight();
-            }
-            aux = aux.getDown();
-        }
-
-        matrix.generateDotFile();
-        System.out.println("listo!");
     }
 
     /* Borrar */
@@ -152,6 +98,56 @@ public class MainController {
         return this.usersTree != null;
     }
 
+    public void memoryStatus(String type) {
+        if (this.layersTree != null) {
+            switch (type) {
+                case "Listado de Imagenes":
+                    this.imgList.generateDotFileWithLayers();
+                    break;
+                case "Arbol de Capas":
+                    this.layersTree.generateDotFile();
+                    break;
+                case "Arbol de Usuarios":
+                    this.usersTree.generateDotFile();
+                    break;
+            }
+        }
+    }
+
+    public void generateLayer(String id) {
+        if (this.layersTree != null) {
+            if (!id.strip().isEmpty()) {
+                if (!id.contains(" ")) {
+                    AVLNode node = layersTree.search(id);
+                    if (node != null) {
+                        SparseMatrix matrix = (SparseMatrix) node.getObject();
+                        matrix.generateDotFile();
+                    } else {
+                        this.frame.showMessage("No existe capa para el id ingresado", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
+    }
+
+    public void generateImgWithAVL(String id) {
+        if (this.layersTree != null) {
+            int imgId = getNumber(id);
+            if (imgId > 0) {
+                ListNode node = imgList.search(imgId);
+                if (node != null) {
+                    Image img = (Image) node.getObject();
+                    layersTree.generateDotWithImgFile(img);
+                    
+                } else {
+                    this.frame.showMessage("El id ingresado no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                this.frame.showMessage("El valor ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     /**
      * Agregar usuarios
      *
@@ -189,6 +185,8 @@ public class MainController {
                     AVLNode node = usersTree.search(id);
                     if (node != null) {
                         return (User) node.getObject();
+                    } else {
+                        this.frame.showMessage("El usuario no existe", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -250,6 +248,11 @@ public class MainController {
         }
     }
 
+    /**
+     * Generar imagen por id
+     *
+     * @param str
+     */
     public void generateImgById(String str) {
         if (this.layersTree != null) {
             int id = getNumber(str);
@@ -275,6 +278,27 @@ public class MainController {
                 }
             } else {
                 this.frame.showMessage("El valor ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Generar imagen por busqueda de capa
+     *
+     * @param str
+     */
+    public void generateImgByLayer(String str) {
+        if (this.layersTree != null) {
+            if (!str.strip().isEmpty()) {
+                if (!str.contains(" ")) {
+                    AVLNode node = layersTree.search(str);
+                    if (node != null) {
+                        SparseMatrix matrix = (SparseMatrix) node.getObject();
+                        matrix.generateImgDotFile();
+                    } else {
+                        this.frame.showMessage("No existe capa para el id ingresado", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         }
     }

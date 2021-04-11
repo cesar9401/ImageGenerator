@@ -1,6 +1,7 @@
 package com.cesar31.imggenerator.structures;
 
 import com.cesar31.imggenerator.control.ControlFile;
+import com.cesar31.imggenerator.model.Image;
 import java.io.IOException;
 
 /**
@@ -11,7 +12,10 @@ public class AVLTree {
 
     private AVLNode root;
     private int size;
+
     private String graph;
+    private String imgGraph;
+
     private boolean exists;
     private boolean deleted;
 
@@ -366,6 +370,7 @@ public class AVLTree {
      */
     private String getDotString() {
         graph = "digraph avl_tree{\n\n";
+        graph += "\tlabel = \"Arbol AVL\";\n";
         graph += "\tnode[ shape = record ]\n\n";
 
         getNodes(root);
@@ -418,10 +423,24 @@ public class AVLTree {
      * @return
      */
     private String nodeName(AVLNode node) {
+        Object object = node.getObject();
         if (node.getRight() == null && node.getLeft() == null) {
-            return "\tnode" + node.getId() + "[ label = \"" + node.getId() + "\" ];\n";
+            if (object instanceof SparseMatrix) {
+                return "\tlayer" + node.getId() + "[ label = \"capa_" + node.getId() + "\" ];\n";
+            }
+
+            /* usuario */
+            return "\tuser" + node.getId() + "[ label = \"" + node.getId() + "\" ];\n";
+            //return "\tnode" + node.getId() + "[ label = \"" + node.getId() + "\" ];\n";
         }
-        return "\tnode" + node.getId() + "[ label = \"<C0> | " + node.getId() + " | <C1>\" ];\n";
+
+        if (object instanceof SparseMatrix) {
+            return "\tlayer" + node.getId() + "[ label = \"<C0> | capa_" + node.getId() + "| <C1>\" ];\n";
+        }
+
+        /* usuario */
+        return "\tuser" + node.getId() + "[ label = \"<C0> | " + node.getId() + " | <C1>\" ];\n";
+        //return "\tnode" + node.getId() + "[ label = \"<C0> | " + node.getId() + " | <C1>\" ];\n";
     }
 
     /**
@@ -432,7 +451,12 @@ public class AVLTree {
      * @return
      */
     private String getPointers(AVLNode father, AVLNode son, boolean right) {
-        return right ? "\tnode" + father.getId() + ":C1 -> node" + son.getId() + ";\n" : "\tnode" + father.getId() + ":C0 -> node" + son.getId() + ";\n";
+        Object object = father.getObject();
+        if (object instanceof SparseMatrix) {
+            return right ? "\tlayer" + father.getId() + ":C1 -> layer" + son.getId() + ";\n" : "\tlayer" + father.getId() + ":C0 -> layer" + son.getId() + ";\n";
+        }
+
+        return right ? "\tuser" + father.getId() + ":C1 -> user" + son.getId() + ";\n" : "\tuser" + father.getId() + ":C0 -> user" + son.getId() + ";\n";
         //return "\tnode" + father.getId() + " -> node" + son.getId() + ";\n";
     }
 
@@ -446,5 +470,81 @@ public class AVLTree {
 
     public AVLNode getRoot() {
         return root;
+    }
+
+    /* GENERAR LISTADO DE CAPAS DE IMAGEN CON PUNTEROS A AVL DE CAPAS  */
+    public void generateDotWithImgFile(Image img) {
+        ControlFile write = new ControlFile();
+        String content = getImgDotString(img);
+
+        write.writeDotFile("img_avl.dot", content);
+        try {
+            write.execComand("dot -Tpng img_avl.dot -o img_avl.png");
+        } catch (IOException ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    private String getImgDotString(Image img) {
+        imgGraph = "digraph avl_tree{\n\n";
+        imgGraph += "\tlabel = \"Arbol AVL\";\n";
+        imgGraph += "\tnode[ shape = record ]\n\n";
+
+        /* Arbol */
+        getNodesForImg(this.root);
+        imgGraph += "\n";
+
+        getPointersForImg(this.root);
+        imgGraph += "\n\n";
+
+        /* Imagen */
+        imgGraph += "\timagen" + img.getId() + "[ label = \"imagen" + img.getId() + "\" color = red ];\n";
+        ObjectList list = img.getLayers();
+        ListNode tmp = list.getRoot();
+        while (tmp != null) {
+            /* nodos listado img */
+            imgGraph += "\tcapa" + tmp.getId() + "[ label = \"capa_" + tmp.getId() + "\" color = red ];\n";
+            tmp = tmp.getNext();
+        }
+        imgGraph += "\n";
+        /* nodo Imagen a nodo root lista de capas */
+        tmp = list.getRoot();
+        if (tmp != null) {
+            imgGraph += "\timagen" + img.getId() + " -> capa" + tmp.getId() + "[ color = red ];\n";
+        }
+        while (tmp != null) {
+            imgGraph += "\tcapa" + tmp.getId() + " -> layer" + tmp.getId() + "[ color = red ];\n";
+            if (tmp.getNext() != null) {
+                imgGraph += "\tcapa" + tmp.getId() + " -> capa" + tmp.getNext().getId() + "[ color = red ];\n";
+            }
+            tmp = tmp.getNext();
+        }
+        imgGraph += "\n";
+
+        imgGraph += "}\n";
+        return imgGraph;
+    }
+
+    private void getNodesForImg(AVLNode father) {
+        if (father != null) {
+            imgGraph += nodeName(father);
+
+            getNodesForImg(father.getLeft());
+            getNodesForImg(father.getRight());
+        }
+    }
+
+    private void getPointersForImg(AVLNode father) {
+        if (father != null) {
+            if (father.getRight() != null) {
+                imgGraph += getPointers(father, father.getRight(), true);
+                getPointersForImg(father.getRight());
+            }
+
+            if (father.getLeft() != null) {
+                imgGraph += getPointers(father, father.getLeft(), false);
+                getPointersForImg(father.getLeft());
+            }
+        }
     }
 }

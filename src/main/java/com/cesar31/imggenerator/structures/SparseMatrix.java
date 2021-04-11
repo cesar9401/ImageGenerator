@@ -383,12 +383,14 @@ public class SparseMatrix {
      */
     public String getDotString() {
         String graph = "digraph graph_name {\n\n";
+        graph += "label = \"Capa_" + this.id + "\"\n";
         graph += "\tnode [shape = box style = filled ];\n\n";
 
         graph += getName(root) + "[ label = \"Matriz\", width = 1.5, group = 1];\n\n";
         graph += "\te0[ shape = point, width = 0 ];\n";
         graph += "\te1[ shape = point, width = 0 ];\n\n";
 
+        /* Filas */
         MatrixNode aux = root.getDown();
         if (aux != null) {
             graph += getName(aux) + "[ label = \"" + aux.getY() + "\" pos = \"5.3,3.5!\" width = 1.5 group = 1 ];\n";
@@ -413,6 +415,7 @@ public class SparseMatrix {
         }
         graph += "\n";
 
+        /* Columnas */
         aux = root.getRight();
         while (aux != null) {
             graph += getName(aux) + "[ label = \"" + aux.getX() + "\" width = 1.5 group = " + (aux.getX() + 1) + " ];\n";
